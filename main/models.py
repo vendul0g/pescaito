@@ -3,6 +3,7 @@ from typing import Any
 from django.db import models
 
 from analysis.domain_analyser import DomainAnalyser
+from analysis.domains_finder.domains_finder import DomainFinder
 
 
 class Project(models.Model):
@@ -53,4 +54,11 @@ class Domain(models.Model):
         return self.name
 
     def analyse(self) -> list[Any]:
-        return DomainAnalyser(self.name).analyse()
+        # Aquí es donde se desarrolla el análisis de cada dominio
+        # 1. Encontrar los dominios parecidos
+        similar_domains = DomainFinder().find(self.name)
+        return similar_domains
+        # 2. Analizar cada dominio parecido
+        # return DomainAnalyser(self.name).analyse()
+        return "Aún en pruebas"
+    

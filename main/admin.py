@@ -35,9 +35,16 @@ class ProjectAdmin(admin.ModelAdmin):
 def analyse_domains(
     modeladmin: "DomainAdmin", request: HttpRequest, queryset: "QuerySet['Domain']"
 ) -> None:
-    for domain in queryset:
+    # Recorremos los dominios seleccionados por la acción y sacamos el resultado
+    for domain in queryset: 
+        # Dentro de la función analyse()
+        # - buscamos los dominios parecidos
+        # - analizamos cada dominio parecido para ver si es phishing
         results = domain.analyse()
-        messages.info(request, f"{domain}: {results}")
+        answer = f"{domain.name}\n"
+        for r in results:
+            answer += f"\t{r}\n"
+        messages.info(request, answer)
 
 
 @admin.register(Domain)

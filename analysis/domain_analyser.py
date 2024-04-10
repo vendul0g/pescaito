@@ -1,6 +1,6 @@
 from typing import Any
 
-from .domains_finder import (
+from .domains_finder.domains_finder import (
     DOMAIN_FINDER,
     DomainFinder,
 )
