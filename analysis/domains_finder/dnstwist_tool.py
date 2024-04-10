@@ -14,6 +14,7 @@ class DNSTwist:
             domain=domain,
             format="json",
             registered=True,
+            # fuzzers="bitsquatting,homoglyph,hyphenation,omission,repetition,replacement,transposition,various,vowel-swap",
             fuzzers="vowel-swap",
             output="/dev/null",
         )

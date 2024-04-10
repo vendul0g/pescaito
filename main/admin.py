@@ -44,7 +44,9 @@ def analyse_domains(
         answer = f"{domain.name}\n"
         for r in results:
             answer += f"\t{r}\n"
-        messages.info(request, answer)
+        # Return the answer to web interface
+        # messages.info(request, answer)
+        messages.success(request, answer)
 
 
 @admin.register(Domain)
