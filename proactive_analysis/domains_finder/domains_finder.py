@@ -1,4 +1,5 @@
 from proactive.models import SimilarDomain # Django
+from main.models import Domain # Django
 from .dnstwist_tool import DNSTwist # Django
 from .ail_typosquatting import AilTyposquatting # Django
 
@@ -12,7 +13,7 @@ class DomainFinder:
     - DNSTwist
     - ail_typo_squatting
     '''
-    def find(self, domain: str) -> list[SimilarDomain]: 
+    def find(self, domain: Domain) -> list[SimilarDomain]: 
         # Análisis de DNSTwist
         domains_dnstwist = DNSTwist().find(domain)
         domains_ail = AilTyposquatting().find(domain)

@@ -51,5 +51,5 @@ class Domain(models.Model):
         # Llamamos al analizador de dominios proactivo
         # Devolvemos el nombre del fichero donde se han volcado los datos
         from proactive_analysis.proactive_analyser import PROACTIVE_ANALYSER
-        return PROACTIVE_ANALYSER.proactive_analysis(self.name)
+        return PROACTIVE_ANALYSER.proactive_analysis(self)
         

@@ -3,12 +3,13 @@ import socket
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from ail_typo_squatting import runAll
 from proactive.models import SimilarDomain # Django
+from main.models import Domain # Django
 
 
 class AilTyposquatting:
-    def find(self, domain: str) -> SimilarDomain:
+    def find(self, domain: Domain) -> SimilarDomain:
         all_domains = runAll(
-            domain=domain,
+            domain=domain.name,
             limit=math.inf,
             formatoutput="text",
             pathOutput="/tmp/",
@@ -16,9 +17,9 @@ class AilTyposquatting:
             givevariations=True,
             keeporiginal=False,
         )
-        return self.__check_domains_exists(all_domains)
+        return self.__check_domains_exists(all_domains, domain)
 
-    def __check_domains_exists(self, domains: list[str]) -> list[SimilarDomain]:
+    def __check_domains_exists(self, domains: list[str], original_domain: Domain) -> list[SimilarDomain]:
         """
         Comprobamos la existencia de todos los dominios generados
         """
@@ -36,7 +37,10 @@ class AilTyposquatting:
             for future in as_completed(future_to_domain):
                 domain = future_to_domain[future]
                 if future.result():
-                    existing_domains.append(SimilarDomain(domain))
+                    existing_domains.append(SimilarDomain(
+                        name=domain,
+                        original_domain=original_domain,
+                    ))
         return existing_domains
 
     def __check_single_domain(self, d: str) -> bool:
