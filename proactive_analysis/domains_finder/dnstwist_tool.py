@@ -1,11 +1,9 @@
+from proactive.models import SimilarDomain # Django
 import dnstwist
-
-from ..domain_entry_result import DomainEntryResult  # Django
-# from domain_entry_result import DomainEntryResult  # Local execution
 
 
 class DNSTwist:
-    def find(self, domain: str) -> list[DomainEntryResult]:
+    def find(self, domain: str) -> list[SimilarDomain]:
         """
         Función para buscar dominios similares a uno dado con DNSTwist
         """
@@ -17,10 +15,11 @@ class DNSTwist:
             # fuzzers="bitsquatting,homoglyph,hyphenation,omission,repetition,replacement,transposition,various,vowel-swap",
             fuzzers="vowel-swap",
             output="/dev/null",
+            threads=20,
         )
-        return self.parse_results(domains)
+        return self.__parse_results(domains)
 
-    def parse_results(self, dnstwist_result: str) -> list[DomainEntryResult]:
+    def __parse_results(self, dnstwist_result: str) -> list[SimilarDomain]:
         """'
         Función para parsear los resultados de dnstwist
         """
@@ -28,9 +27,8 @@ class DNSTwist:
         domains = []
         for entry in dnstwist_result:  # For each entry in the result
             # Creamos una instancia de DomainEntryResult
-            domain_entry = DomainEntryResult(
+            domain_entry = SimilarDomain(
                 name=entry["domain"],
-                ip=entry["dns_a"] if "dns_a" in entry else [],
             )
             domains.append(domain_entry)
         return domains

@@ -5,10 +5,12 @@ from django.contrib import (
 from django.db.models import QuerySet
 from django.http import HttpRequest
 
+from django.utils.safestring import mark_safe
 from main.models import (
     Domain,
     Project,
 )
+from django.conf import settings
 
 
 class DomainInline(admin.TabularInline):
@@ -37,15 +39,12 @@ def analyse_domains(
 ) -> None:
     # Recorremos los dominios seleccionados por la acción y sacamos el resultado
     for domain in queryset: 
-        # Dentro de la función analyse()
-        # - buscamos los dominios parecidos
-        # - analizamos cada dominio parecido para ver si es phishing
-        results = domain.analyse()
-        answer = f"{domain.name}\n"
-        for r in results:
-            answer += f"\t{r}\n"
-        # Return the answer to web interface
-        # messages.info(request, answer)
+        # Llamamos al analizador de dominios
+        result_file_name = domain.analyse()
+        file_url = request.build_absolute_uri(settings.MEDIA_URL + result_file_name)
+        # TODO Manejar errores sobre los valores de url_result
+        # Devolvemos la respuesta a la interfaz web
+        answer = mark_safe(f"Análisis de {domain.name} completado. Consulta el resultado <a href='{file_url}'>aquí</a>.")
         messages.success(request, answer)
 
 

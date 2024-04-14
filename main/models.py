@@ -1,9 +1,4 @@
-from typing import Any
-
 from django.db import models
-
-from analysis.domain_analyser import DomainAnalyser
-from analysis.domains_finder.domains_finder import DomainFinder
 
 
 class Project(models.Model):
@@ -23,8 +18,7 @@ class Project(models.Model):
         ordering = ["-created"]
 
     def __str__(self) -> str:
-        return self.name
-
+        return str(self.name)
 
 class Domain(models.Model):
 
@@ -51,14 +45,11 @@ class Domain(models.Model):
         ordering = ["-created"]
 
     def __str__(self) -> str:
-        return self.name
+        return str(self.name)
 
-    def analyse(self) -> list[Any]:
-        # Aquí es donde se desarrolla el análisis de cada dominio
-        # 1. Encontrar los dominios parecidos
-        similar_domains = DomainFinder().find(self.name)
-        return similar_domains
-        # 2. Analizar cada dominio parecido
-        # return DomainAnalyser(self.name).analyse()
-        return "Aún en pruebas"
-    
+    def analyse(self) -> str:
+        # Llamamos al analizador de dominios proactivo
+        # Devolvemos el nombre del fichero donde se han volcado los datos
+        from proactive_analysis.proactive_analyser import PROACTIVE_ANALYSER
+        return PROACTIVE_ANALYSER.proactive_analysis(self.name)
+        

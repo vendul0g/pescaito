@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -42,6 +43,10 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "pescaito.urls"
+
+# Directorio con los resultados
+MEDIA_ROOT = os.path.join(BASE_DIR, '_media')
+MEDIA_URL = '/_media/'
 
 TEMPLATES = [
     {
