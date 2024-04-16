@@ -6,9 +6,8 @@ from .domains_finder.domains_finder import (
     DOMAIN_FINDER,
     # DomainFinder,
 )
-from .check_phishing.suspicious_domains_analyser import (
+from .check_phishing.similar_domains_analyser import (
     DOMAIN_ANALYSER,
-    # DomainAnalyser,
 )
 
 class ProactiveAnalyser:

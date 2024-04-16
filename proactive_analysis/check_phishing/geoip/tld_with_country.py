@@ -1,7 +1,9 @@
 import json
-from sys import argv
+import os
+from django.conf import settings
+from proactive.models import SimilarDomain # Django
 
-DATA_FILE = 'tld_country_data.json'
+DATA_FILE = os.path.join(settings.BASE_DIR, 'proactive_analysis/check_phishing/geoip/', 'tld_country_data.json')
 
 class TLDCountry:
     def __init__(self):
@@ -19,21 +21,23 @@ class TLDCountry:
             print(f"Data file {DATA_FILE} is not a valid JSON.")
             exit(1)
 
-    def get_country_from_tld(self, tld: str) -> str:
+    def get_country_from_tld(self, similar_domain: SimilarDomain):
         """
         Recupera la información del país asociado a un TLD dado.
         
         :param tld: Cadena que representa el TLD 
         :return: La cadena correspondiente al país asociado 
         """
+        print(DATA_FILE)
+        # Comprobamos si está cropeado el TLD
+        if '.' in similar_domain.name:
+            tld = similar_domain.name.split('.')[-1]
+        # Obtenemos el país asociado al TLD del fichero JSON
         country = self.tld_by_country.get(tld.lower())
         if country is None:
-            print(f"No se encuentra el país para el TLD dado: {tld}")
-        return country
+            print(f"No se encuentra el país para el TLD dado: {similar_domain}")
+        # Asignamos el país al dominio similar
+        similar_domain.tld_country = country
 
-if __name__ == "__main__":
-    tld = argv[1]
-    tld_country = TLDCountry()
-    not_country = tld_country.get_country_from_tld(tld)
-    if not_country:
-        print(f"El país asociado al TLD {tld} es {not_country}")
+
+TLD_COUNTRY = TLDCountry()
