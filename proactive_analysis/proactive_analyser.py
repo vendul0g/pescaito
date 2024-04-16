@@ -13,7 +13,7 @@ from .check_phishing.similar_domains_analyser import (
 class ProactiveAnalyser:
     def proactive_analysis(self, domain: Domain) -> str:
         # Aquí es donde se desarrolla el análisis de cada dominio
-        # 1. Encontrar los dominios8 parecidos
+        # 1. Encontrar los dominios parecidos
         similar_domains = DOMAIN_FINDER.find(domain) # TODO No limitar las búsquedas
 
         # 2. Analizar cada dominio parecido para comprobar si es phishing
