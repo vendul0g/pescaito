@@ -1,19 +1,13 @@
 import os
 from django.conf import settings
 from main.models import Domain
-from proactive.models import SimilarDomain
-from .domains_finder.domains_finder import (
-    DOMAIN_FINDER,
-    # DomainFinder,
-)
-from .check_phishing.similar_domains_analyser import (
-    DOMAIN_ANALYSER,
-)
+from .domains_finder.domains_finder import DOMAIN_FINDER
+from .check_phishing.similar_domains_analyser import DOMAIN_ANALYSER
 
 class ProactiveAnalyser:
     def proactive_analysis(self, domain: Domain) -> str:
         # Aquí es donde se desarrolla el análisis de cada dominio
-        # 1. Encontrar los dominios parecidos
+        # 1. Encontrar los dominios8 parecidos
         similar_domains = DOMAIN_FINDER.find(domain) # TODO No limitar las búsquedas
 
         # 2. Analizar cada dominio parecido para comprobar si es phishing

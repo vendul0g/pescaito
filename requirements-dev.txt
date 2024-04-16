@@ -4,3 +4,5 @@ djlint==1.34.1
 dnspython==2.6.1
 dnstwist==20240116
 ail-typo-squatting==2.7.4
+pytz==2024.1
+pycrtsh==0.3.11

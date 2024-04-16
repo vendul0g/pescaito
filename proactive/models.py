@@ -58,12 +58,11 @@ class SimilarDomain(models.Model):
         verbose_name="Paises asociados a las IPs del dominio",
     )
 
-    ###############################################
     # Indica si el dominio parecido es phishing
-    # is_phishing = models.BooleanField(
-    #     default=False,
-    #     verbose_name="Es Phishing?",
-    # )
+    is_phishing = models.BooleanField(
+        default=False,
+        verbose_name="Es Phishing?",
+    )
 
     '''
     Métodos
@@ -85,9 +84,9 @@ class SimilarDomain(models.Model):
                 f"{self.__get_verbose_name('updated_date')}: {self.updated_date}\n"
                 f"{self.__get_verbose_name('expiration_date')}: {self.expiration_date}\n"
                 f"{self.__get_verbose_name('tld_country')}: {self.tld_country}\n"
-                f"{self.__get_verbose_name('ip_countries')}: {self.ip_countries}\n"
+                f"{self.__get_verbose_name('ip_countries')}: {self.ip_countries if self.ip_countries else 'No se encuentra país'}\n"
+                f"{self.__get_verbose_name('is_phishing')}: {self.is_phishing}\n"
         )
-                # f"{self.__get_verbose_name('is_phishing')}: {self.is_phishing}\n"
 
     def __eq__(self, other):
         if isinstance(other, SimilarDomain):
