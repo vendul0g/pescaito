@@ -28,11 +28,12 @@ class TLDCountry:
         """
         country = self.tld_by_country.get(tld.lower())
         if country is None:
-            raise ValueError(f"No se encuentra el país para el TLD dado: {tld}")
+            print(f"No se encuentra el país para el TLD dado: {tld}")
         return country
 
 if __name__ == "__main__":
     tld = argv[1]
     tld_country = TLDCountry()
-    country = tld_country.get_country_from_tld(tld)
-    print(f"País asociado al TLD {tld}: {country}")
+    not_country = tld_country.get_country_from_tld(tld)
+    if not_country:
+        print(f"El país asociado al TLD {tld} es {not_country}")
