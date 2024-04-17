@@ -1,43 +1,63 @@
 balderip.com - Dominio original
 =========================================
 
-Nombre de dominio parecido: balderup.com
-Dominio original: balderip.com
-Fecha de aparicion: None
-Fecha de creacion del dominio: 2015-08-07T08:24:27Z
-Fecha de ultima actualizacion del dominio: 2023-07-04T08:49:28Z
-Fecha de expiracion del dominio: 2024-08-07T08:24:27Z
-Pais asociado al TLD: None
-Paises asociados a las IPs del dominio: {'Sweden'}
+Nombre de dominio parecido:			balderip.com
+Dominio original:				balderip.com
+Fecha de aparicion:				None
+Fecha de creacion del dominio:			2012-06-05T15:46:23Z
+Fecha de ultima actualizacion del dominio:	2023-05-22T02:38:44Z
+Fecha de expiracion del dominio:		2024-06-05T15:46:23Z
+Pais asociado al TLD:				None
+Paises asociados a las IPs del dominio:		{'Spain'}
+Tiene certificado TLS?:				True
+CA del certificado TLS:				GlobalSign nv-sa
+Fecha de creacion del certificado TLS:		2023-10-02 09:55:47+00:00
+Fecha del certificado TLS mas antiguo:		2013-06-10 17:00:50
+Es Phishing?:					False
 
 
-Nombre de dominio parecido: balderip.com
-Dominio original: balderip.com
-Fecha de aparicion: None
-Fecha de creacion del dominio: 2012-06-05T15:46:23Z
-Fecha de ultima actualizacion del dominio: 2023-05-22T02:38:44Z
-Fecha de expiracion del dominio: 2024-06-05T15:46:23Z
-Pais asociado al TLD: None
-Paises asociados a las IPs del dominio: {'Spain'}
+Nombre de dominio parecido:			alderip.com
+Dominio original:				balderip.com
+Fecha de aparicion:				None
+Fecha de creacion del dominio:			2007-05-15T06:41:21Z
+Fecha de ultima actualizacion del dominio:	2024-02-21T05:37:31Z
+Fecha de expiracion del dominio:		2025-05-15T06:41:21Z
+Pais asociado al TLD:				None
+Paises asociados a las IPs del dominio:		{'Australia'}
+Tiene certificado TLS?:				False
+CA del certificado TLS:				
+Fecha de creacion del certificado TLS:		None
+Fecha del certificado TLS mas antiguo:		None
+Es Phishing?:					False
 
 
-Nombre de dominio parecido: alderip.com
-Dominio original: balderip.com
-Fecha de aparicion: None
-Fecha de creacion del dominio: 2007-05-15T06:41:21Z
-Fecha de ultima actualizacion del dominio: 2024-02-21T05:37:31Z
-Fecha de expiracion del dominio: 2025-05-15T06:41:21Z
-Pais asociado al TLD: None
-Paises asociados a las IPs del dominio: {'Australia'}
+Nombre de dominio parecido:			balderup.com
+Dominio original:				balderip.com
+Fecha de aparicion:				None
+Fecha de creacion del dominio:			2015-08-07T08:24:27Z
+Fecha de ultima actualizacion del dominio:	2023-07-04T08:49:28Z
+Fecha de expiracion del dominio:		2024-08-07T08:24:27Z
+Pais asociado al TLD:				None
+Paises asociados a las IPs del dominio:		{'Sweden'}
+Tiene certificado TLS?:				False
+CA del certificado TLS:				
+Fecha de creacion del certificado TLS:		None
+Fecha del certificado TLS mas antiguo:		None
+Es Phishing?:					False
 
 
-Nombre de dominio parecido: balderi.com
-Dominio original: balderip.com
-Fecha de aparicion: None
-Fecha de creacion del dominio: 2013-09-10T13:37:05Z
-Fecha de ultima actualizacion del dominio: 2023-09-20T00:02:08Z
-Fecha de expiracion del dominio: 2024-09-10T13:37:05Z
-Pais asociado al TLD: None
-Paises asociados a las IPs del dominio: {'United States'}
+Nombre de dominio parecido:			balderi.com
+Dominio original:				balderip.com
+Fecha de aparicion:				None
+Fecha de creacion del dominio:			2013-09-10T13:37:05Z
+Fecha de ultima actualizacion del dominio:	2023-09-20T00:02:08Z
+Fecha de expiracion del dominio:		2024-09-10T13:37:05Z
+Pais asociado al TLD:				None
+Paises asociados a las IPs del dominio:		{'United States'}
+Tiene certificado TLS?:				False
+CA del certificado TLS:				
+Fecha de creacion del certificado TLS:		None
+Fecha del certificado TLS mas antiguo:		None
+Es Phishing?:					False
 
 

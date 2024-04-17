@@ -58,6 +58,28 @@ class SimilarDomain(models.Model):
         verbose_name="Paises asociados a las IPs del dominio",
     )
 
+    # Indica si el dominio tiene certificado TLS
+    is_certificate_tls = models.BooleanField(
+        default=False,
+        verbose_name="Tiene certificado TLS?",
+    )
+
+    # Autoridad de certificación del certificado TLS
+    tls_certificate_ca = models.CharField(
+        max_length=256,
+        verbose_name="CA del certificado TLS",
+    )
+
+    # Fecha de creación del certificado TLS
+    tls_certificate_creation_date = models.DateTimeField(
+        verbose_name="Fecha de creacion del certificado TLS",
+    )
+
+    # Fecha del certificado TLS más antiguo
+    tls_certificate_oldest_date = models.DateTimeField(
+        verbose_name="Fecha del certificado TLS mas antiguo",
+    )
+
     # Indica si el dominio parecido es phishing
     is_phishing = models.BooleanField(
         default=False,
@@ -75,17 +97,21 @@ class SimilarDomain(models.Model):
     def __get_verbose_name(self, field):
         return self._meta.get_field(field).verbose_name
 
-    def __str__(self): # TODO actualizar con los demás atributos
+    def __str__(self):
         return (
-                f"{self.__get_verbose_name('name')}: {self.name}\n"
-                f"{self.__get_verbose_name('original_domain')}: {self.original_domain}\n"
-                f"{self.__get_verbose_name('found_date')}: {self.found_date}\n"
-                f"{self.__get_verbose_name('creation_date')}: {self.creation_date}\n"
-                f"{self.__get_verbose_name('updated_date')}: {self.updated_date}\n"
-                f"{self.__get_verbose_name('expiration_date')}: {self.expiration_date}\n"
-                f"{self.__get_verbose_name('tld_country')}: {self.tld_country}\n"
-                f"{self.__get_verbose_name('ip_countries')}: {self.ip_countries if self.ip_countries else 'No se encuentra país'}\n"
-                f"{self.__get_verbose_name('is_phishing')}: {self.is_phishing}\n"
+            f"Nombre de dominio parecido:\t\t\t{self.name}\n"
+            f"Dominio original:\t\t\t\t{self.original_domain}\n"
+            f"Fecha de aparicion:\t\t\t\t{self.found_date}\n"
+            f"Fecha de creacion del dominio:\t\t\t{self.creation_date}\n"
+            f"Fecha de ultima actualizacion del dominio:\t{self.updated_date}\n"
+            f"Fecha de expiracion del dominio:\t\t{self.expiration_date}\n"
+            f"Pais asociado al TLD:\t\t\t\t{self.tld_country}\n"
+            f"Paises asociados a las IPs del dominio:\t\t{self.ip_countries if self.ip_countries else 'No se encuentra país'}\n"
+            f"Tiene certificado TLS?:\t\t\t\t{self.is_certificate_tls}\n"
+            f"CA del certificado TLS:\t\t\t\t{self.tls_certificate_ca}\n"
+            f"Fecha de creacion del certificado TLS:\t\t{self.tls_certificate_creation_date}\n"
+            f"Fecha del certificado TLS mas antiguo:\t\t{self.tls_certificate_oldest_date}\n"
+            f"Es Phishing?:\t\t\t\t\t{self.is_phishing}\n"
         )
 
     def __eq__(self, other):

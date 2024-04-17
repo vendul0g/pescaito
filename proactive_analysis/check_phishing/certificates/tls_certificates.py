@@ -3,6 +3,7 @@ import socket
 from datetime import datetime
 import pytz
 from pycrtsh import Crtsh
+from proactive.models import SimilarDomain
 
 class Certificate:
     """
@@ -12,7 +13,7 @@ class Certificate:
         self.ca_name = ca_name
         self.creation_date = creation_date
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"CA: {self.ca_name}, Creation Date: {self.creation_date}"
 
 class TLSCertificateChecker:
@@ -23,7 +24,7 @@ class TLSCertificateChecker:
         self.domain = domain
         self.context = context if context else ssl.create_default_context()
 
-    def get_certificate(self):
+    def get_certificate(self) -> dict:
         """
         Obtiene el certificado TLS actual del dominio.
         """
@@ -36,7 +37,7 @@ class TLSCertificateChecker:
             print(f"Error al conectar con {self.domain} para obtener el certificado TLS: {e}")
             return None
 
-    def extract_certificate_info(self, cert):
+    def extract_certificate_info(self, cert: dict) -> Certificate:
         """
         Extrae información del certificado TLS como el nombre de la CA y la fecha de creación.
         """
@@ -57,14 +58,14 @@ class CRTHistoryChecker:
         self.domain = domain
         self.service = service if service else Crtsh()
 
-    def get_historical_certificates(self):
+    def get_historical_certificates(self) -> list:
         """
         Consulta crt.sh para obtener datos históricos de certificados del dominio.
         """
         certs = self.service.search(self.domain)
         return certs
 
-    def find_oldest_certificate(self, crt_data):
+    def find_oldest_certificate(self, crt_data: list):
         """
         Encuentra el certificado más antiguo del conjunto de datos obtenidos de crt.sh.
         """
@@ -75,13 +76,12 @@ class CRTHistoryChecker:
         return oldest_certificate_date
 
 class TLSCertificateAnalyser:
-    @staticmethod
-    def analyse_tls_certificate(domain: str):
+    def analyse_tls_certificate(self, similar_domain: SimilarDomain):
         """
         Obtiene información del certificado TLS de un dominio, incluyendo detalles actuales y el certificado más antiguo.
         """
-        tls_checker = TLSCertificateChecker(domain)
-        crt_history_checker = CRTHistoryChecker(domain)
+        tls_checker = TLSCertificateChecker(similar_domain.name)
+        crt_history_checker = CRTHistoryChecker(similar_domain.name)
 
         cert = tls_checker.get_certificate()
         current_cert_info = tls_checker.extract_certificate_info(cert)
@@ -89,12 +89,20 @@ class TLSCertificateAnalyser:
         crt_data = crt_history_checker.get_historical_certificates()
         oldest_certificate_date = crt_history_checker.find_oldest_certificate(crt_data)
 
-        print(current_cert_info)
-        print(f"Oldest certificate date: {oldest_certificate_date}")
+        # Metemos los resultados en el dominio simiiar
+        self.__similar_domain_parser(similar_domain, current_cert_info, oldest_certificate_date)
+    
+    def __similar_domain_parser(self, similar_domain: SimilarDomain, current_cert_info: Certificate, oldest_certificate_date: datetime):
+        # Compruebo que no ha habido errores (None)
+        if current_cert_info is None:
+            similar_domain.is_certificate_tls = False
+            similar_domain.tls_certificate_ca = None
+            similar_domain.tls_certificate_creation_date = None
+            return
 
-        return current_cert_info, oldest_certificate_date
+        similar_domain.is_certificate_tls = True
+        similar_domain.tls_certificate_ca = current_cert_info.ca_name
+        similar_domain.tls_certificate_creation_date = current_cert_info.creation_date
+        similar_domain.tls_certificate_oldest_date = oldest_certificate_date
 
-# Test
-if __name__ == "__main__":
-    _domain = "legitec.com"
-    TLSCertificateAnalyser.analyse_tls_certificate(_domain)
+TLS_CERTIFICATE_ANALYSER = TLSCertificateAnalyser()
