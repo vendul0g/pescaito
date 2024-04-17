@@ -4,26 +4,28 @@ from datetime import datetime
 import pytz
 from pycrtsh import Crtsh
 
-# Interface para la verificación de certificados
-class ICertificateChecker:
-    def get_certificate(self):
-        pass
-
-    def extract_certificate_info(self, cert):
-        pass
-
-# Clase concreta para la verificación de certificados SSL
-class SSLCertificateChecker(ICertificateChecker):
+class Certificate:
     """
-    Clase para manejar la verificación y obtención de detalles de certificados SSL de un dominio.
+    Clase para almacenar la información del certificado.
     """
-    def __init__(self, domain: str):
+    def __init__(self, ca_name: str, creation_date: datetime):
+        self.ca_name = ca_name
+        self.creation_date = creation_date
+
+    def __str__(self):
+        return f"CA: {self.ca_name}, Creation Date: {self.creation_date}"
+
+class TLSCertificateChecker:
+    """
+    Clase para manejar la verificación y obtención de detalles de certificados TLS de un dominio.
+    """
+    def __init__(self, domain: str, context=None):
         self.domain = domain
-        self.context = ssl.create_default_context()
+        self.context = context if context else ssl.create_default_context()
 
-    def get_certificate(self) -> dict:
+    def get_certificate(self):
         """
-        Obtiene el certificado SSL actual del dominio.
+        Obtiene el certificado TLS actual del dominio.
         """
         try:
             with socket.create_connection((self.domain, 443), timeout=10) as sock:
@@ -31,38 +33,38 @@ class SSLCertificateChecker(ICertificateChecker):
                     cert = ssock.getpeercert()
             return cert
         except Exception as e:
-            print(f"Error al conectar con {self.domain} para obtener el certificado SSL: {e}")
+            print(f"Error al conectar con {self.domain} para obtener el certificado TLS: {e}")
             return None
 
-    def extract_certificate_info(self, cert: dict) -> dict:
+    def extract_certificate_info(self, cert):
         """
-        Extrae información del certificado SSL como el nombre de la CA y la fecha de creación.
+        Extrae información del certificado TLS como el nombre de la CA y la fecha de creación.
         """
         if cert:
             issuer = dict(x[0] for x in cert["issuer"])
             ca_name = issuer.get("organizationName", "Desconocido")
             utc_zone = pytz.utc
             valid_from = utc_zone.localize(datetime.strptime(cert["notBefore"], "%b %d %H:%M:%S %Y %Z"))
-            return {"CA": ca_name, "creation_date": valid_from}
-        return {"certificate": "Not found"}
+            return Certificate(ca_name, valid_from)
+        else:
+            return None
 
-# Clase para la verificación de certificados históricos
-class CRTSHChecker:
+class CRTHistoryChecker:
     """
     Clase para manejar la obtención y procesamiento de datos históricos de certificados desde crt.sh.
     """
-    def __init__(self, domain):
+    def __init__(self, domain, service=None):
         self.domain = domain
+        self.service = service if service else Crtsh()
 
-    def get_historical_certificates(self) -> list:
+    def get_historical_certificates(self):
         """
         Consulta crt.sh para obtener datos históricos de certificados del dominio.
         """
-        c = Crtsh()
-        certs = c.search(self.domain)
+        certs = self.service.search(self.domain)
         return certs
 
-    def find_oldest_certificate(self, crt_data: list) -> datetime:
+    def find_oldest_certificate(self, crt_data):
         """
         Encuentra el certificado más antiguo del conjunto de datos obtenidos de crt.sh.
         """
@@ -72,40 +74,27 @@ class CRTSHChecker:
                 oldest_certificate_date = cert["not_before"]
         return oldest_certificate_date
 
-def get_tls_certificate_info(domain):
-    """
-    Obtiene información del certificado TLS de un dominio, incluyendo detalles actuales y el certificado más antiguo.
-    """
-    checker = SSLCertificateChecker(domain)
-    crt_checker = CRTSHChecker(domain)
+class TLSCertificateAnalyser:
+    @staticmethod
+    def analyse_tls_certificate(domain: str):
+        """
+        Obtiene información del certificado TLS de un dominio, incluyendo detalles actuales y el certificado más antiguo.
+        """
+        tls_checker = TLSCertificateChecker(domain)
+        crt_history_checker = CRTHistoryChecker(domain)
 
-    cert = checker.get_certificate()
-    current_cert_info = checker.extract_certificate_info(cert)
+        cert = tls_checker.get_certificate()
+        current_cert_info = tls_checker.extract_certificate_info(cert)
 
-    crt_data = crt_checker.get_historical_certificates()
-    oldest_cert_info = crt_checker.find_oldest_certificate(crt_data)
+        crt_data = crt_history_checker.get_historical_certificates()
+        oldest_certificate_date = crt_history_checker.find_oldest_certificate(crt_data)
 
-    cert_info = {
-        "current_certificate": current_cert_info,
-        "oldest_certificate": oldest_cert_info,
-    }
+        print(current_cert_info)
+        print(f"Oldest certificate date: {oldest_certificate_date}")
 
-    # Extract the CA issuer name
-    ca_issuer = cert_info["current_certificate"]["CA"]
+        return current_cert_info, oldest_certificate_date
 
-    # Extract the creation date of the current certificate
-    current_certificate_date = cert_info["current_certificate"]["creation_date"]
-
-    # Extract the date of the oldest certificate
-    oldest_certificate_date = cert_info["oldest_certificate"]
-
-    # Print
-    print(f"CA: {ca_issuer}")
-    print(f"Current certificate creation date: {current_certificate_date}")
-    print(f"Oldest certificate date: {oldest_certificate_date}")
-
-    return cert_info
-
-# Descomentar la siguiente línea para probar la función con un dominio
-info = get_tls_certificate_info("legitec.com")
-# print(info)
+# Test
+if __name__ == "__main__":
+    _domain = "legitec.com"
+    TLSCertificateAnalyser.analyse_tls_certificate(_domain)
