@@ -3,7 +3,7 @@ import socket
 from datetime import datetime
 import pytz
 from pycrtsh import Crtsh
-from proactive.models import SimilarDomain
+from proactive.models import SimilarDomain # Django 
 
 class Certificate:
     """
@@ -18,7 +18,8 @@ class Certificate:
 
 class TLSCertificateChecker:
     """
-    Clase para manejar la verificación y obtención de detalles de certificados TLS de un dominio.
+    Clase para manejar la verificación y obtención de detalles de certificados 
+    TLS de un dominio. (Información del certificado actual)
     """
     def __init__(self, domain: str, context=None):
         self.domain = domain
@@ -29,12 +30,14 @@ class TLSCertificateChecker:
         Obtiene el certificado TLS actual del dominio.
         """
         try:
+            print("[-] Conectando con el dominio para obtener el certificado TLS - dominio:", self.domain)
             with socket.create_connection((self.domain, 443), timeout=10) as sock:
                 with self.context.wrap_socket(sock, server_hostname=self.domain) as ssock:
                     cert = ssock.getpeercert()
+            print(f"[+] Conexión exitosa con {self.domain} para obtener el certificado TLS")
             return cert
         except Exception as e:
-            print(f"Error al conectar con {self.domain} para obtener el certificado TLS: {e}")
+            print(f"[!] Error al conectar con {self.domain} para obtener el certificado TLS: {e}")
             return None
 
     def extract_certificate_info(self, cert: dict) -> Certificate:
@@ -65,7 +68,7 @@ class CRTHistoryChecker:
         certs = self.service.search(self.domain)
         return certs
 
-    def find_oldest_certificate(self, crt_data: list):
+    def find_oldest_certificate(self, crt_data: list) -> datetime:
         """
         Encuentra el certificado más antiguo del conjunto de datos obtenidos de crt.sh.
         """
@@ -76,23 +79,25 @@ class CRTHistoryChecker:
         return oldest_certificate_date
 
 class TLSCertificateAnalyser:
-    def analyse_tls_certificate(self, similar_domain: SimilarDomain):
+    def analyse_tls_certificate(self, similar_domain_name: str) -> tuple:
         """
         Obtiene información del certificado TLS de un dominio, incluyendo detalles actuales y el certificado más antiguo.
         """
-        tls_checker = TLSCertificateChecker(similar_domain.name)
-        crt_history_checker = CRTHistoryChecker(similar_domain.name)
+        print(f"[-] Analizando certificado TLS para {similar_domain_name}")
+        tls_checker = TLSCertificateChecker(similar_domain_name)
+        crt_history_checker = CRTHistoryChecker(similar_domain_name)
 
         cert = tls_checker.get_certificate()
-        current_cert_info = tls_checker.extract_certificate_info(cert)
+        info_current_cert = tls_checker.extract_certificate_info(cert)
 
         crt_data = crt_history_checker.get_historical_certificates()
         oldest_certificate_date = crt_history_checker.find_oldest_certificate(crt_data)
 
-        # Metemos los resultados en el dominio simiiar
-        self.__similar_domain_parser(similar_domain, current_cert_info, oldest_certificate_date)
-    
-    def __similar_domain_parser(self, similar_domain: SimilarDomain, current_cert_info: Certificate, oldest_certificate_date: datetime):
+        # Devolvemosl los resultados
+        return info_current_cert, oldest_certificate_date
+
+class TlsParser:
+    def similar_domain_parser(self, similar_domain: SimilarDomain, current_cert_info: Certificate, oldest_certificate_date: datetime):
         # Compruebo que no ha habido errores (None)
         if current_cert_info is None:
             similar_domain.is_certificate_tls = False
@@ -106,3 +111,12 @@ class TLSCertificateAnalyser:
         similar_domain.tls_certificate_oldest_date = oldest_certificate_date
 
 TLS_CERTIFICATE_ANALYSER = TLSCertificateAnalyser()
+TLS_PARSER = TlsParser()
+
+if __name__ == "__main__":
+    # Dominio de ejemplo
+    domain = "balderip.com"
+    # Analizamos el certificado TLS
+    info_current_cert, oldest_certificate_date = TLS_CERTIFICATE_ANALYSER.analyse_tls_certificate(domain)
+    print(f"INFO CURRENT CERT: {info_current_cert}, OLDEST CERT DATE: {oldest_certificate_date}")
+    

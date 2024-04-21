@@ -106,7 +106,7 @@ class SimilarDomain(models.Model):
             f"Fecha de ultima actualizacion del dominio:\t{self.updated_date}\n"
             f"Fecha de expiracion del dominio:\t\t{self.expiration_date}\n"
             f"Pais asociado al TLD:\t\t\t\t{self.tld_country}\n"
-            f"Paises asociados a las IPs del dominio:\t\t{self.ip_countries if self.ip_countries else 'No se encuentra país'}\n"
+            f"Paises asociados a las IPs del dominio:\t\t{self.ip_countries if self.ip_countries else 'No se encuentra pais'}\n"
             f"Tiene certificado TLS?:\t\t\t\t{self.is_certificate_tls}\n"
             f"CA del certificado TLS:\t\t\t\t{self.tls_certificate_ca}\n"
             f"Fecha de creacion del certificado TLS:\t\t{self.tls_certificate_creation_date}\n"

@@ -1,6 +1,5 @@
 import socket
 import requests
-from proactive.models import SimilarDomain  # Django
 
 ENDPOINT = "http://ip-api.com/json"
 PARAMS = "?fields=country"
@@ -10,13 +9,12 @@ class GeoIP:
     Clase para geolocalizar las IPs asociadas a un dominio.
     '''
     # Dado un dominio, devuelve los países asociados a las IPs
-    def get_domain_country(self, similar_domain: SimilarDomain):
+    def get_domain_country(self, similar_domain_name: str):
         # Obtenemos las IPs
-        ips = self.__resolve(similar_domain.name)
+        ips = self.__resolve(similar_domain_name)
         # Obtenemos los países
         countries = set(self.__get_country(ip) for ip in ips if ip)
-        # Asignamos los países al dominio similar
-        similar_domain.ip_countries = countries
+        return countries
     
     def __get_country(self, ip: str) -> str:
         # Definimos la URL para la petición

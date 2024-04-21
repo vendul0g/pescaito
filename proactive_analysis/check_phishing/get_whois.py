@@ -1,7 +1,6 @@
 import socket
 import re
-from proactive.models import SimilarDomain  # Django
-
+from proactive.models import SimilarDomain # Django
 
 class ServerCluster:
     def __init__(self):
@@ -110,22 +109,20 @@ class WhoisAnalyzers:
         self.server_cluster = ServerCluster()
         self.whois_parser = WhoisResultParser()
 
-    def analyze_whois(self, similar_domain: SimilarDomain) -> bool:
+    def analyze_whois(self, similar_domain_name: str) -> str:
         # Obtenemos los servidores (según el TLD)
-        tld_servers = self.server_cluster.get_server_from_tld(similar_domain.name)
+        tld_servers = self.server_cluster.get_server_from_tld(similar_domain_name)
 
         # Intenta consultar en cada servidor WHOIS hasta obtener una respuesta válida
         for server in tld_servers:
-            response = self.__request_whois_servers(server, similar_domain.name)
+            response = self.__request_whois_servers(server, similar_domain_name)
             # Hacemos el análisis de la respuesta
-            is_saved = self.whois_parser.parse_results(response, similar_domain)
-            if is_saved:
-                # Si se ha guardado la información, salimos del bucle
-                return True
+            return response
+            
 
         # Si ningún servidor WHOIS devuelve una respuesta válida
         self.server_cluster.mostrar_alerta()
-        print(f"---> No se pudo obtener información WHOIS para {similar_domain}")
+        print(f"---> No se pudo obtener información WHOIS para {similar_domain_name}")
         return False
 
     def __request_whois_servers(self, server: str, similar_domain_name: str) -> str:
@@ -149,3 +146,4 @@ class WhoisAnalyzers:
 
 
 WHOIS_ANALYSER = WhoisAnalyzers()
+WHOIS_PARSER = WhoisResultParser()

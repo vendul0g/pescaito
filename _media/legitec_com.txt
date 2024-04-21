@@ -1,157 +1,213 @@
 legitec.com - Dominio original
 =========================================
 
-Nombre de dominio parecido: leitec.com
-Dominio original: legitec.com
-Fecha de aparicion: None
-Fecha de creacion del dominio: 1997-09-09T04:00:00Z
-Fecha de ultima actualizacion del dominio: 2023-09-09T07:01:43Z
-Fecha de expiracion del dominio: 2024-09-08T04:00:00Z
-Pais asociado al TLD: None
-Paises asociados a las IPs del dominio: {'Austria'}
-Es Phishing?: False
+Nombre de dominio parecido:			egitec.com
+Dominio original:				legitec.com
+Fecha de aparicion:				None
+Fecha de creacion del dominio:			None
+Fecha de ultima actualizacion del dominio:	None
+Fecha de expiracion del dominio:		None
+Pais asociado al TLD:				
+Paises asociados a las IPs del dominio:		No se encuentra pais
+Tiene certificado TLS?:				False
+CA del certificado TLS:				
+Fecha de creacion del certificado TLS:		None
+Fecha del certificado TLS mas antiguo:		None
+Es Phishing?:					False
 
 
-Nombre de dominio parecido: legitic.com
-Dominio original: legitec.com
-Fecha de aparicion: None
-Fecha de creacion del dominio: 2005-03-11T03:39:58Z
-Fecha de ultima actualizacion del dominio: 2024-03-11T07:52:43Z
-Fecha de expiracion del dominio: 2025-03-11T02:39:58Z
-Pais asociado al TLD: None
-Paises asociados a las IPs del dominio: {'Germany'}
-Es Phishing?: False
+Nombre de dominio parecido:			legtec.com
+Dominio original:				legitec.com
+Fecha de aparicion:				None
+Fecha de creacion del dominio:			None
+Fecha de ultima actualizacion del dominio:	None
+Fecha de expiracion del dominio:		None
+Pais asociado al TLD:				
+Paises asociados a las IPs del dominio:		No se encuentra pais
+Tiene certificado TLS?:				False
+CA del certificado TLS:				
+Fecha de creacion del certificado TLS:		None
+Fecha del certificado TLS mas antiguo:		None
+Es Phishing?:					False
 
 
-Nombre de dominio parecido: legitc.com
-Dominio original: legitec.com
-Fecha de aparicion: None
-Fecha de creacion del dominio: 2024-03-03T05:39:20Z
-Fecha de ultima actualizacion del dominio: 2024-03-03T05:43:48Z
-Fecha de expiracion del dominio: 2025-03-03T05:39:20Z
-Pais asociado al TLD: None
-Paises asociados a las IPs del dominio: {'United States', 'Canada'}
-Es Phishing?: False
+Nombre de dominio parecido:			legiec.com
+Dominio original:				legitec.com
+Fecha de aparicion:				None
+Fecha de creacion del dominio:			None
+Fecha de ultima actualizacion del dominio:	None
+Fecha de expiracion del dominio:		None
+Pais asociado al TLD:				
+Paises asociados a las IPs del dominio:		No se encuentra pais
+Tiene certificado TLS?:				False
+CA del certificado TLS:				
+Fecha de creacion del certificado TLS:		None
+Fecha del certificado TLS mas antiguo:		None
+Es Phishing?:					False
 
 
-Nombre de dominio parecido: legiec.com
-Dominio original: legitec.com
-Fecha de aparicion: None
-Fecha de creacion del dominio: 2005-07-28T06:08:06Z
-Fecha de ultima actualizacion del dominio: 2023-06-26T04:26:57Z
-Fecha de expiracion del dominio: 2024-07-28T06:08:06Z
-Pais asociado al TLD: None
-Paises asociados a las IPs del dominio: {'United States'}
-Es Phishing?: False
+Nombre de dominio parecido:			legotec.com
+Dominio original:				legitec.com
+Fecha de aparicion:				None
+Fecha de creacion del dominio:			None
+Fecha de ultima actualizacion del dominio:	None
+Fecha de expiracion del dominio:		None
+Pais asociado al TLD:				
+Paises asociados a las IPs del dominio:		No se encuentra pais
+Tiene certificado TLS?:				False
+CA del certificado TLS:				
+Fecha de creacion del certificado TLS:		None
+Fecha del certificado TLS mas antiguo:		None
+Es Phishing?:					False
 
 
-Nombre de dominio parecido: legitac.com
-Dominio original: legitec.com
-Fecha de aparicion: None
-Fecha de creacion del dominio: 2019-11-08T09:18:12Z
-Fecha de ultima actualizacion del dominio: 2023-11-09T16:31:17Z
-Fecha de expiracion del dominio: 2025-11-08T09:18:12Z
-Pais asociado al TLD: None
-Paises asociados a las IPs del dominio: {'United States'}
-Es Phishing?: False
+Nombre de dominio parecido:			legite.com
+Dominio original:				legitec.com
+Fecha de aparicion:				None
+Fecha de creacion del dominio:			None
+Fecha de ultima actualizacion del dominio:	None
+Fecha de expiracion del dominio:		None
+Pais asociado al TLD:				
+Paises asociados a las IPs del dominio:		No se encuentra pais
+Tiene certificado TLS?:				False
+CA del certificado TLS:				
+Fecha de creacion del certificado TLS:		None
+Fecha del certificado TLS mas antiguo:		None
+Es Phishing?:					False
 
 
-Nombre de dominio parecido: logitec.com
-Dominio original: legitec.com
-Fecha de aparicion: None
-Fecha de creacion del dominio: 1997-07-10T04:00:00Z
-Fecha de ultima actualizacion del dominio: 2023-07-08T11:01:33Z
-Fecha de expiracion del dominio: 2024-07-09T04:00:00Z
-Pais asociado al TLD: None
-Paises asociados a las IPs del dominio: {'Germany'}
-Es Phishing?: False
+Nombre de dominio parecido:			legitic.com
+Dominio original:				legitec.com
+Fecha de aparicion:				None
+Fecha de creacion del dominio:			None
+Fecha de ultima actualizacion del dominio:	None
+Fecha de expiracion del dominio:		None
+Pais asociado al TLD:				
+Paises asociados a las IPs del dominio:		No se encuentra pais
+Tiene certificado TLS?:				False
+CA del certificado TLS:				
+Fecha de creacion del certificado TLS:		None
+Fecha del certificado TLS mas antiguo:		None
+Es Phishing?:					False
 
 
-Nombre de dominio parecido: lgitec.com
-Dominio original: legitec.com
-Fecha de aparicion: None
-Fecha de creacion del dominio: 2022-11-19T07:22:56Z
-Fecha de ultima actualizacion del dominio: 2023-09-21T07:16:42Z
-Fecha de expiracion del dominio: 2024-11-19T07:22:56Z
-Pais asociado al TLD: None
-Paises asociados a las IPs del dominio: {'Hong Kong'}
-Es Phishing?: False
+Nombre de dominio parecido:			logitec.com
+Dominio original:				legitec.com
+Fecha de aparicion:				None
+Fecha de creacion del dominio:			None
+Fecha de ultima actualizacion del dominio:	None
+Fecha de expiracion del dominio:		None
+Pais asociado al TLD:				
+Paises asociados a las IPs del dominio:		No se encuentra pais
+Tiene certificado TLS?:				False
+CA del certificado TLS:				
+Fecha de creacion del certificado TLS:		None
+Fecha del certificado TLS mas antiguo:		None
+Es Phishing?:					True
 
 
-Nombre de dominio parecido: legotec.com
-Dominio original: legitec.com
-Fecha de aparicion: None
-Fecha de creacion del dominio: 2000-07-04T05:33:57Z
-Fecha de ultima actualizacion del dominio: 2023-05-05T06:57:41Z
-Fecha de expiracion del dominio: 2024-07-04T05:33:57Z
-Pais asociado al TLD: None
-Paises asociados a las IPs del dominio: {'Japan'}
-Es Phishing?: False
+Nombre de dominio parecido:			lgitec.com
+Dominio original:				legitec.com
+Fecha de aparicion:				None
+Fecha de creacion del dominio:			None
+Fecha de ultima actualizacion del dominio:	None
+Fecha de expiracion del dominio:		None
+Pais asociado al TLD:				
+Paises asociados a las IPs del dominio:		No se encuentra pais
+Tiene certificado TLS?:				False
+CA del certificado TLS:				
+Fecha de creacion del certificado TLS:		None
+Fecha del certificado TLS mas antiguo:		None
+Es Phishing?:					False
 
 
-Nombre de dominio parecido: legitec.com
-Dominio original: legitec.com
-Fecha de aparicion: None
-Fecha de creacion del dominio: 2004-07-03T17:40:01Z
-Fecha de ultima actualizacion del dominio: 2023-06-19T07:22:57Z
-Fecha de expiracion del dominio: 2024-07-03T17:40:01Z
-Pais asociado al TLD: None
-Paises asociados a las IPs del dominio: {'Spain'}
-Es Phishing?: False
+Nombre de dominio parecido:			leitec.com
+Dominio original:				legitec.com
+Fecha de aparicion:				None
+Fecha de creacion del dominio:			None
+Fecha de ultima actualizacion del dominio:	None
+Fecha de expiracion del dominio:		None
+Pais asociado al TLD:				
+Paises asociados a las IPs del dominio:		No se encuentra pais
+Tiene certificado TLS?:				False
+CA del certificado TLS:				
+Fecha de creacion del certificado TLS:		None
+Fecha del certificado TLS mas antiguo:		None
+Es Phishing?:					False
 
 
-Nombre de dominio parecido: legatec.com
-Dominio original: legitec.com
-Fecha de aparicion: None
-Fecha de creacion del dominio: 2003-10-11T18:31:20Z
-Fecha de ultima actualizacion del dominio: 2023-08-17T17:26:51Z
-Fecha de expiracion del dominio: 2024-10-11T18:31:20Z
-Pais asociado al TLD: None
-Paises asociados a las IPs del dominio: {'United States'}
-Es Phishing?: False
+Nombre de dominio parecido:			legitec.com
+Dominio original:				legitec.com
+Fecha de aparicion:				None
+Fecha de creacion del dominio:			None
+Fecha de ultima actualizacion del dominio:	None
+Fecha de expiracion del dominio:		None
+Pais asociado al TLD:				
+Paises asociados a las IPs del dominio:		No se encuentra pais
+Tiene certificado TLS?:				False
+CA del certificado TLS:				
+Fecha de creacion del certificado TLS:		None
+Fecha del certificado TLS mas antiguo:		None
+Es Phishing?:					False
 
 
-Nombre de dominio parecido: legite.com
-Dominio original: legitec.com
-Fecha de aparicion: None
-Fecha de creacion del dominio: 2007-12-10T19:10:10Z
-Fecha de ultima actualizacion del dominio: 2023-12-01T16:59:56Z
-Fecha de expiracion del dominio: 2024-12-10T19:10:10Z
-Pais asociado al TLD: None
-Paises asociados a las IPs del dominio: {'United States'}
-Es Phishing?: False
+Nombre de dominio parecido:			legitac.com
+Dominio original:				legitec.com
+Fecha de aparicion:				None
+Fecha de creacion del dominio:			None
+Fecha de ultima actualizacion del dominio:	None
+Fecha de expiracion del dominio:		None
+Pais asociado al TLD:				
+Paises asociados a las IPs del dominio:		No se encuentra pais
+Tiene certificado TLS?:				False
+CA del certificado TLS:				
+Fecha de creacion del certificado TLS:		None
+Fecha del certificado TLS mas antiguo:		None
+Es Phishing?:					False
 
 
-Nombre de dominio parecido: legtec.com
-Dominio original: legitec.com
-Fecha de aparicion: None
-Fecha de creacion del dominio: 2018-01-27T20:04:36Z
-Fecha de ultima actualizacion del dominio: 2023-04-20T17:08:01Z
-Fecha de expiracion del dominio: 2026-01-27T20:04:36Z
-Pais asociado al TLD: None
-Paises asociados a las IPs del dominio: {'United States'}
-Es Phishing?: False
+Nombre de dominio parecido:			legitc.com
+Dominio original:				legitec.com
+Fecha de aparicion:				None
+Fecha de creacion del dominio:			None
+Fecha de ultima actualizacion del dominio:	None
+Fecha de expiracion del dominio:		None
+Pais asociado al TLD:				
+Paises asociados a las IPs del dominio:		No se encuentra pais
+Tiene certificado TLS?:				False
+CA del certificado TLS:				
+Fecha de creacion del certificado TLS:		None
+Fecha del certificado TLS mas antiguo:		None
+Es Phishing?:					False
 
 
-Nombre de dominio parecido: egitec.com
-Dominio original: legitec.com
-Fecha de aparicion: None
-Fecha de creacion del dominio: 2009-07-26T05:23:42Z
-Fecha de ultima actualizacion del dominio: 2023-07-02T05:31:50Z
-Fecha de expiracion del dominio: 2024-07-26T05:23:42Z
-Pais asociado al TLD: None
-Paises asociados a las IPs del dominio: {'Germany'}
-Es Phishing?: False
+Nombre de dominio parecido:			legatec.com
+Dominio original:				legitec.com
+Fecha de aparicion:				None
+Fecha de creacion del dominio:			None
+Fecha de ultima actualizacion del dominio:	None
+Fecha de expiracion del dominio:		None
+Pais asociado al TLD:				
+Paises asociados a las IPs del dominio:		No se encuentra pais
+Tiene certificado TLS?:				False
+CA del certificado TLS:				
+Fecha de creacion del certificado TLS:		None
+Fecha del certificado TLS mas antiguo:		None
+Es Phishing?:					False
 
 
-Nombre de dominio parecido: ligitec.com
-Dominio original: legitec.com
-Fecha de aparicion: None
-Fecha de creacion del dominio: 2020-10-26T09:12:15Z
-Fecha de ultima actualizacion del dominio: 2022-04-06T01:10:50Z
-Fecha de expiracion del dominio: 2024-10-26T09:12:15Z
-Pais asociado al TLD: None
-Paises asociados a las IPs del dominio: set()
-Es Phishing?: False
+Nombre de dominio parecido:			ligitec.com
+Dominio original:				legitec.com
+Fecha de aparicion:				None
+Fecha de creacion del dominio:			None
+Fecha de ultima actualizacion del dominio:	None
+Fecha de expiracion del dominio:		None
+Pais asociado al TLD:				
+Paises asociados a las IPs del dominio:		No se encuentra pais
+Tiene certificado TLS?:				False
+CA del certificado TLS:				
+Fecha de creacion del certificado TLS:		None
+Fecha del certificado TLS mas antiguo:		None
+Es Phishing?:					True
 
 
