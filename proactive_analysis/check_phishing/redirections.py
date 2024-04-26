@@ -49,11 +49,11 @@ class RedirectAnalyser:
         final_domain = urlparse(final_url).netloc
         return final_url, final_domain
 
+REDIRECT_ANALYSER = RedirectAnalyser()
 
 if __name__ == "__main__":
-    redirect_analyser = RedirectAnalyser()
     final_url_, is_same_domain_, contains_special_chars_ = (
-        redirect_analyser.analyse_redirects("balderip.com", 80)
+        REDIRECT_ANALYSER.analyse_redirects("balderip.com", 80)
     )
     print(f"URL Final: {final_url_}, Mismo dominio: {is_same_domain_}"
           f", Contiene caracteres especiales: {contains_special_chars_}")
