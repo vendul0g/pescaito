@@ -11,12 +11,12 @@ class ProactiveAnalyser:
         similar_domains = DOMAIN_FINDER.find(domain) # TODO No limitar las búsquedas
 
         # 2. Analizar cada dominio parecido para comprobar si es phishing
-        for sm in similar_domains:
+        for sm in sorted(similar_domains):
             DOMAIN_ANALYSER.analyse(sm)
 
         # 3. Devolver los resultados
         # Creamos una respuesta
-        file_content = f"{domain.name} - Dominio original\n=========================================\n\n"
+        file_content = f"{domain.name} - Dominio original\n{'='*70}\n\n"
         for r in similar_domains:
             file_content += f"{r}\n\n"
 

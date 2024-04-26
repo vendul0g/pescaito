@@ -6,11 +6,13 @@ from main.models import Domain
 # Definición de la clase DomainEntryResult
 # Representa el resultado del análisis de un dominio
 
+
 class SimilarDomain(models.Model):
-    '''
+    """
     Atributos
     ===============================================
-    '''
+    """
+
     # Nombre del dominio parecido
     name = models.CharField(
         primary_key=True,
@@ -33,9 +35,7 @@ class SimilarDomain(models.Model):
     )
 
     # Fecha de creación del dominio
-    creation_date = models.DateTimeField(
-        verbose_name="Fecha de creacion del dominio"
-    )
+    creation_date = models.DateTimeField(verbose_name="Fecha de creacion del dominio")
 
     # Fecha de ultima actualización del dominio
     updated_date = models.DateTimeField(
@@ -44,7 +44,7 @@ class SimilarDomain(models.Model):
 
     # Fecha de expiración del dominio
     expiration_date = models.DateTimeField(
-        verbose_name="Fecha de expiracion del dominio"    
+        verbose_name="Fecha de expiracion del dominio"
     )
 
     # País asociado al TLD
@@ -80,16 +80,34 @@ class SimilarDomain(models.Model):
         verbose_name="Fecha del certificado TLS mas antiguo",
     )
 
+    # Indica la URL final de las redirecciones HTTP
+    final_url = models.URLField(
+        verbose_name="URL final de las redirecciones HTTP",
+    )
+
+    # Indica si la URL final de las redirecciones HTTP es el mismo dominio
+    is_redirect_same_domain = models.BooleanField(
+        default=False,
+        verbose_name="Redirecciona al mismo dominio?",
+    )
+
+    # Indica si la URL final de redirects tiene caracteres especiales
+    has_redirect_special_chars = models.BooleanField(
+        default=False,
+        verbose_name="Contiene caracteres especiales?",
+    )
+
     # Indica si el dominio parecido es phishing
     is_phishing = models.BooleanField(
         default=False,
         verbose_name="Es Phishing?",
     )
 
-    '''
+    """
     Métodos
     ===============================================
-    '''
+    """
+
     class Meta:
         verbose_name = "Dominio parecido"
         ordering = ["-found_date"]
@@ -98,21 +116,26 @@ class SimilarDomain(models.Model):
         return self._meta.get_field(field).verbose_name
 
     def __str__(self):
+        label_width = 45 # Ancho de la etiqueta
         return (
-            f"Nombre de dominio parecido:\t\t\t{self.name}\n"
-            f"Dominio original:\t\t\t\t{self.original_domain}\n"
-            f"Fecha de aparicion:\t\t\t\t{self.found_date}\n"
-            f"Fecha de creacion del dominio:\t\t\t{self.creation_date}\n"
-            f"Fecha de ultima actualizacion del dominio:\t{self.updated_date}\n"
-            f"Fecha de expiracion del dominio:\t\t{self.expiration_date}\n"
-            f"Pais asociado al TLD:\t\t\t\t{self.tld_country}\n"
-            f"Paises asociados a las IPs del dominio:\t\t{self.ip_countries if self.ip_countries else 'No se encuentra pais'}\n"
-            f"Tiene certificado TLS?:\t\t\t\t{self.is_certificate_tls}\n"
-            f"CA del certificado TLS:\t\t\t\t{self.tls_certificate_ca}\n"
-            f"Fecha de creacion del certificado TLS:\t\t{self.tls_certificate_creation_date}\n"
-            f"Fecha del certificado TLS mas antiguo:\t\t{self.tls_certificate_oldest_date}\n"
-            f"Es Phishing?:\t\t\t\t\t{self.is_phishing}\n"
+            f"{self.__get_verbose_name('name'):{label_width}}{self.name}\n"
+            f"{self.__get_verbose_name('original_domain'):{label_width}}{self.original_domain}\n"
+            f"{self.__get_verbose_name('found_date'):{label_width}}{self.found_date}\n"
+            f"{self.__get_verbose_name('creation_date'):{label_width}}{self.creation_date}\n"
+            f"{self.__get_verbose_name('updated_date'):{label_width}}{self.updated_date}\n"
+            f"{self.__get_verbose_name('expiration_date'):{label_width}}{self.expiration_date}\n"
+            f"{self.__get_verbose_name('tld_country'):{label_width}}{self.tld_country}\n"
+            f"{self.__get_verbose_name('ip_countries'):{label_width}}{self.ip_countries if self.ip_countries else 'No country found'}\n"
+            f"{self.__get_verbose_name('is_certificate_tls'):{label_width}}{self.is_certificate_tls}\n"
+            f"{self.__get_verbose_name('tls_certificate_ca'):{label_width}}{self.tls_certificate_ca}\n"
+            f"{self.__get_verbose_name('tls_certificate_creation_date'):{label_width}}{self.tls_certificate_creation_date}\n"
+            f"{self.__get_verbose_name('tls_certificate_oldest_date'):{label_width}}{self.tls_certificate_oldest_date}\n"
+            f"{self.__get_verbose_name('final_url'):{label_width}}{self.final_url}\n"
+            f"{self.__get_verbose_name('is_redirect_same_domain'):{label_width}}{self.is_redirect_same_domain}\n"
+            f"{self.__get_verbose_name('has_redirect_special_chars'):{label_width}}{self.has_redirect_special_chars}\n"
+            f"{self.__get_verbose_name('is_phishing'):{label_width}}{self.is_phishing}\n"
         )
+
 
     def __eq__(self, other):
         if isinstance(other, SimilarDomain):
@@ -121,3 +144,9 @@ class SimilarDomain(models.Model):
 
     def __hash__(self):
         return hash(self.name)
+    
+    def __lt__(self, other):
+        # Comparar por nombre para ordenar
+        if isinstance(other, SimilarDomain):
+            return self.name < other.name
+        return NotImplemented

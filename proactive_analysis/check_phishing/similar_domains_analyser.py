@@ -4,6 +4,11 @@ from .geoip.tld_with_country import TLD_COUNTRY
 from .geoip.get_geoip import GEOIP
 from .ACL.check_acl import ACL_CHECKER
 from .certificates.tls_certificates import TLS_CERTIFICATE_ANALYSER, TLS_PARSER
+from .redirections import REDIRECT_ANALYSER
+
+# Variables globales
+HTTP_PORT = 80
+HTTPS_PORT = 443
 
 
 class SimilarDomainAnalyser:
@@ -35,8 +40,27 @@ class SimilarDomainAnalyser:
         similar_domain.ip_countries = countries
 
         # 4. Comprobamos el certificado TLS del dominio
-        info_current_cert, oldest_certificate_date = TLS_CERTIFICATE_ANALYSER.analyse_tls_certificate(similar_domain.name)
-        TLS_PARSER.similar_domain_parser(similar_domain, info_current_cert, oldest_certificate_date)
+        info_current_cert, oldest_certificate_date = (
+            TLS_CERTIFICATE_ANALYSER.analyse_tls_certificate(similar_domain.name)
+        )
+        TLS_PARSER.similar_domain_parser(
+            similar_domain, info_current_cert, oldest_certificate_date
+        )
+
+        # 5. Comprobamos las redirecciones HTTP del dominio
+        # TODO mejora: que analice tanto el puerto 80 como el 443 haya o no certificado
+        port = HTTPS_PORT if similar_domain.is_certificate_tls else HTTP_PORT
+        (
+            similar_domain.final_url,
+            similar_domain.is_redirect_same_domain,
+            similar_domain.has_redirect_special_chars,
+        ) = REDIRECT_ANALYSER.analyse_redirects(
+            similar_domain.name,
+            port,
+        )
+
+        # 6. Comprobamos el contenido HTML de la página
+        
 
 
 DOMAIN_ANALYSER = SimilarDomainAnalyser()
