@@ -5,6 +5,7 @@ from .geoip.get_geoip import GEOIP
 from .ACL.check_acl import ACL_CHECKER
 from .certificates.tls_certificates import TLS_CERTIFICATE_ANALYSER, TLS_PARSER
 from .redirections import REDIRECT_ANALYSER
+from .html_analyser import HTML_ANALYSER
 
 # Variables globales
 HTTP_PORT = 80
@@ -28,7 +29,7 @@ class SimilarDomainAnalyser:
             return
 
         # 2. Analizamos el registro WHOIS
-        whois_response = WHOIS_ANALYSER.analyze_whois(similar_domain.name)
+        whois_response = WHOIS_ANALYSER.analyse_whois(similar_domain.name)
         WHOIS_PARSER.parse_results(whois_response, similar_domain)
 
         # 3. Analizamos la geolocalización
@@ -60,7 +61,9 @@ class SimilarDomainAnalyser:
         )
 
         # 6. Comprobamos el contenido HTML de la página
+        HTML_ANALYSER.analyse_html(similar_domain.name, similar_domain.orig_domain_name)
         
 
 
-DOMAIN_ANALYSER = SimilarDomainAnalyser()
+
+SIMILAR_DOMAIN_ANALYSER = SimilarDomainAnalyser()

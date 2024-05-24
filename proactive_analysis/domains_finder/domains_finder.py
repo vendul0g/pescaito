@@ -1,7 +1,7 @@
 from proactive.models import SimilarDomain # Django
 from main.models import Domain # Django
-from .dnstwist_tool import DNSTwist # Django
-from .ail_typosquatting import AilTyposquatting # Django
+from .dnstwist_tool import DNS_TWIST # Django
+from .ail_typosquatting import AIL_TYPO_SQUATTING # Django
 
 # from dnstwist_tool import DNSTwist # Local execution:TODO comentar
 # from domain_entry_result import DomainEntryResult # Local execution:TODO comentar
@@ -15,8 +15,8 @@ class DomainFinder:
     '''
     def find(self, domain: Domain) -> list[SimilarDomain]: 
         # Análisis de DNSTwist
-        domains_dnstwist = DNSTwist().find(domain)
-        domains_ail = AilTyposquatting().find(domain)
+        domains_dnstwist = DNS_TWIST.find(domain)
+        domains_ail = AIL_TYPO_SQUATTING.find(domain)
 
         # Unión de los dominios encontrados
         unique_domains = set(domains_dnstwist) | set(domains_ail)
@@ -25,5 +25,3 @@ class DomainFinder:
 
 
 DOMAIN_FINDER = DomainFinder()
-
-

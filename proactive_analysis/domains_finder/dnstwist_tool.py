@@ -1,6 +1,6 @@
+import dnstwist
 from proactive.models import SimilarDomain # Django
 from main.models import Domain # Django
-import dnstwist
 
 
 class DNSTwist:
@@ -34,3 +34,5 @@ class DNSTwist:
             )
             domains.append(domain_entry)
         return domains
+
+DNS_TWIST = DNSTwist()

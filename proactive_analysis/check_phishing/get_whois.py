@@ -104,12 +104,12 @@ class WhoisResultParser:
             return False
         return True
 
-class WhoisAnalyzers:
+class WhoisAnalyser:
     def __init__(self):
         self.server_cluster = ServerCluster()
         self.whois_parser = WhoisResultParser()
 
-    def analyze_whois(self, similar_domain_name: str) -> str:
+    def analyse_whois(self, similar_domain_name: str) -> str:
         # Obtenemos los servidores (según el TLD)
         tld_servers = self.server_cluster.get_server_from_tld(similar_domain_name)
 
@@ -145,5 +145,5 @@ class WhoisAnalyzers:
             print(f"Error al conectar con el servidor {server}: {e}")
 
 
-WHOIS_ANALYSER = WhoisAnalyzers()
+WHOIS_ANALYSER = WhoisAnalyser()
 WHOIS_PARSER = WhoisResultParser()

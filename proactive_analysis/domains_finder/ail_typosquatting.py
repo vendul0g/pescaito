@@ -1,13 +1,16 @@
 import math
 import socket
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from ail_typo_squatting import runAll
-from proactive.models import SimilarDomain # Django
-from main.models import Domain # Django
+from ail_typo_squatting import runAll, dnsResolving
+from proactive.models import SimilarDomain  # Django
+from main.models import Domain  # Django
 
 
 class AilTyposquatting:
     def find(self, domain: Domain) -> SimilarDomain:
+        """
+        Generamos dominios similares al dominio dado y comprobamos si existen
+        """
         all_domains = runAll(
             domain=domain.name,
             limit=math.inf,
@@ -17,11 +20,16 @@ class AilTyposquatting:
             givevariations=True,
             keeporiginal=False,
         )
+
+        # dnsResolving(all_domains, domain.name) TODO ver si esto funciona
         return self.__check_domains_exists(all_domains, domain)
 
-    def __check_domains_exists(self, domains: list[str], original_domain: Domain) -> list[SimilarDomain]:
+    def __check_domains_exists(
+        self, domains: list[str], original_domain: Domain
+    ) -> list[SimilarDomain]:
         """
         Comprobamos la existencia de todos los dominios generados
+        Se recorren todos los dominios generados y se comprueba si existen
         """
         # 1. Parseamos la lista para que podamos tener solo nombres de dominio
         domains = self.__parse_list(domains)
@@ -36,12 +44,18 @@ class AilTyposquatting:
 
             for future in as_completed(future_to_domain):
                 domain = future_to_domain[future]
-                if future.result():
-                    existing_domains.append(SimilarDomain(
-                        name=domain,
-                        original_domain=original_domain,
-                    ))
+                try:
+                    if future.result():
+                        existing_domains.append(
+                            SimilarDomain(
+                                name=domain,
+                                original_domain=original_domain,
+                            )
+                        )
+                except Exception as e:
+                    print(f"[!] Error checking domain {domain}: {str(e)}")
         return existing_domains
+
 
     def __check_single_domain(self, d: str) -> bool:
         """
@@ -52,6 +66,10 @@ class AilTyposquatting:
             return True
         except socket.gaierror:
             return False
+        except Exception as e:
+            print(f"[!] Error de red comprobando {d}: {str(e)}")
+            return False
+
 
     def __parse_list(self, domains: list[str]) -> list[str]:
         """
@@ -59,3 +77,6 @@ class AilTyposquatting:
         y no el resto de información
         """
         return [d[0] for d in domains]
+
+
+AIL_TYPO_SQUATTING = AilTyposquatting()

@@ -9,10 +9,10 @@ class RedirectAnalyser:
     si la URL final contiene caracteres especiales fuera del código ASCII estándar.
     """
 
-    def analyse_redirects(self, domain: str, port: int):
+    def analyse_redirects(self, domain: str, port: int) -> tuple:
         """
         Realiza la conexión y sigue todas las redirecciones para el dominio y
-        puertodados hasta que no haya más redirecciones, analiza la URL final
+        puerto dados hasta que no haya más redirecciones, analiza la URL final
         para determinar si se redirige al mismo dominio o a otro y si contiene
         caracteres especiales.
 
@@ -33,7 +33,7 @@ class RedirectAnalyser:
             print(f"Error al conectarse o seguir redirecciones: {e}")
             return (None, False, False)
 
-    def follow_redirects(self, url: str):
+    def follow_redirects(self, url: str) -> tuple:
         """
         Sigue las redirecciones de una URL dada hasta que no haya más
         redirecciones.

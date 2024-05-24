@@ -2,7 +2,7 @@ import os
 from django.conf import settings
 from main.models import Domain
 from .domains_finder.domains_finder import DOMAIN_FINDER
-from .check_phishing.similar_domains_analyser import DOMAIN_ANALYSER
+from .check_phishing.similar_domains_analyser import SIMILAR_DOMAIN_ANALYSER
 
 class ProactiveAnalyser:
     def proactive_analysis(self, domain: Domain) -> str:
@@ -12,7 +12,7 @@ class ProactiveAnalyser:
 
         # 2. Analizar cada dominio parecido para comprobar si es phishing
         for sm in sorted(similar_domains):
-            DOMAIN_ANALYSER.analyse(sm)
+            SIMILAR_DOMAIN_ANALYSER.analyse(sm)
 
         # 3. Devolver los resultados
         # Creamos una respuesta
