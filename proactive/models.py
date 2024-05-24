@@ -97,10 +97,61 @@ class SimilarDomain(models.Model):
         verbose_name="Contiene caracteres especiales?",
     )
 
+    # Indica el número de recursos a los que apunta de manera interna la página
+    internal_links = models.IntegerField(
+        default=0,
+        verbose_name="Numero de enlaces internos",
+    )
+
+    # Indica el número de recursos a los que apunta de manera externa la página
+    external_links = models.IntegerField(
+        default=0,
+        verbose_name="Numero de enlaces externos",
+    )
+
+    # Indica si existen referencias al dominio original
+    is_original_domain = models.BooleanField(
+        default=False,
+        verbose_name="Referencias al dominio original?",
+    )
+
+    # Indica si en la página existe un formulario de login
+    is_login_form = models.BooleanField(
+        default=False,
+        verbose_name="Formulario de login?",
+    )
+
+    # Indica si existen enlaces sospechosos en la página (lista de str)
+    bad_links = models.JSONField(
+        verbose_name="Enlaces enganosos",
+    )
+
+    # Indica los RMS resultantes del análisis visual (lista de floats)
+    visual_similarity = models.JSONField(
+        verbose_name="Similitud visual",
+    )
+
+    # Indica el número de hallazgos encontrados sobre herramientas PaaS
+    paas_tools = models.IntegerField(
+        default=0,
+        verbose_name="Hallazgos de herramientas PaaS",
+    )
+
     # Indica si el dominio parecido es phishing
     is_phishing = models.BooleanField(
         default=False,
         verbose_name="Es Phishing?",
+    )
+
+    # Indica la última fecha de análisis
+    last_analysis_date = models.DateTimeField(
+        auto_now=True,
+        verbose_name="Ultima fecha de analisis",
+    )
+
+    # Indica la próxima fecha de análisis
+    next_analysis_date = models.DateTimeField(
+        verbose_name="Proxima fecha de analisis",
     )
 
     """
@@ -133,6 +184,16 @@ class SimilarDomain(models.Model):
             f"{self.__get_verbose_name('final_url'):{label_width}}{self.final_url}\n"
             f"{self.__get_verbose_name('is_redirect_same_domain'):{label_width}}{self.is_redirect_same_domain}\n"
             f"{self.__get_verbose_name('has_redirect_special_chars'):{label_width}}{self.has_redirect_special_chars}\n"
+            f"{self.__get_verbose_name('internal_links'):{label_width}}{self.internal_links}\n"
+            f"{self.__get_verbose_name('external_links'):{label_width}}{self.external_links}\n"
+            f"{self.__get_verbose_name('is_original_domain'):{label_width}}{self.is_original_domain}\n"
+            f"{self.__get_verbose_name('is_login_form'):{label_width}}{self.is_login_form}\n"
+            f"{self.__get_verbose_name('bad_links'):{label_width}}{self.bad_links if self.bad_links else 'No bad links found'}\n"
+            f"{self.__get_verbose_name('visual_similarity'):{label_width}}{self.visual_similarity if self.visual_similarity else 'No visual similarity found'}\n"
+            f"{self.__get_verbose_name('paas_tools'):{label_width}}{self.paas_tools}\n"
+            f"{self.__get_verbose_name('last_analysis_date'):{label_width}}{self.last_analysis_date}\n"
+            f"{self.__get_verbose_name('next_analysis_date'):{label_width}}{self.next_analysis_date}\n"
+            f"\n{'-'*25} Phishing {'-'*25}\n"
             f"{self.__get_verbose_name('is_phishing'):{label_width}}{self.is_phishing}\n"
         )
 
