@@ -21,7 +21,6 @@ class HrefAnalyser:
         """
         for tag in tags:
             url = tag.get(attr)
-            print(f"url: {url}")
             # Comprobamos si el enlace es interno o externo
             if url and "http" in url and not similar_domain_name in url:
                 external_links.append(url)
@@ -38,7 +37,8 @@ class HrefAnalyser:
         href_tags = soup.find_all(["a", "link"])  # usan href
         src_tags = soup.find_all(["script", "img"])  # usan src
         action_tags = soup.find_all("form")  # usan action
-        print(f"href_tags: {href_tags} - src_tags: {src_tags} - action_tags: {action_tags}")
+        # print(f"href_tags: {href_tags} - src_tags: {src_tags} - action_tags: {action_tags}")
+        
         # Inicializamos la lista
         external_links = []
 
@@ -56,6 +56,5 @@ class HrefAnalyser:
 
         # Devolvemos los resultados
         return internal_count, external_count
-
 
 RESOURCE_ANALYSER = HrefAnalyser()
