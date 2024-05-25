@@ -20,6 +20,7 @@ class Project(models.Model):
     def __str__(self) -> str:
         return str(self.name)
 
+
 class Domain(models.Model):
 
     name = models.CharField(
@@ -40,16 +41,23 @@ class Domain(models.Model):
         verbose_name="fecha de creación",
     )
 
+    urls = models.JSONField(
+        verbose_name="URLs",
+        help_text="Enter a list of URLs.",
+        default=list,
+        blank=True,
+    )
+
     class Meta:
         verbose_name = "dominio"
         ordering = ["-created"]
 
     def __str__(self) -> str:
-        return str(self.name)
+        return str(f"{self.name} in {self.project} - URLs: {self.urls}")
 
     def analyse(self) -> str:
         # Llamamos al analizador de dominios proactivo
         # Devolvemos el nombre del fichero donde se han volcado los datos
         from proactive_analysis.proactive_analyser import PROACTIVE_ANALYSER
+
         return PROACTIVE_ANALYSER.proactive_analysis(self)
-        

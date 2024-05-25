@@ -6,6 +6,7 @@ from .ACL.check_acl import ACL_CHECKER
 from .certificates.tls_certificates import TLS_CERTIFICATE_ANALYSER, TLS_PARSER
 from .redirections import REDIRECT_ANALYSER
 from .html_analyser.html_analyse import HTML_ANALYSER
+from .visual_analysis.visual_analyser import VISUAL_ANALYSER
 
 # Variables globales
 HTTP_PORT = 80
@@ -103,7 +104,29 @@ class SimilarDomainAnalyser:
             return True
         return False
 
+    def visually(self, similar_domain: SimilarDomain):
+        """
+        Realiza un análisis visual del dominio similar.
+        """
+        results = []
+        print(f"[*] URLs: {similar_domain.original_domain.urls}")
+        # Recorremos todas las URLs del dominio original para ver si son phishing
+        for url in similar_domain.original_domain.urls:
+            print(f"[+] Analizando visualmente {similar_domain.final_url} y {url}")
+            r = VISUAL_ANALYSER.visual_analysis(similar_domain.final_url, url)
+            print(f"--> {r}")
+            results.append(r)
 
+        similar_domain.visual_similarity = results
+        print(f"[+] Resultados visuales: {similar_domain.visual_similarity}")
+
+    def paas(self, similar_domain: SimilarDomain):
+        """
+        Realiza un análisis de las herramientas PaaS utilizadas en el dominio similar.
+        - GoPhish
+        """
+        # TODO implementar
+        similar_domain.paas_tools = 0
 
     def analyse(self, similar_domain: SimilarDomain):
         """
@@ -133,8 +156,10 @@ class SimilarDomainAnalyser:
             return
         
         # 7. Hacemos el análisis visual
+        self.visually(similar_domain)
 
-        
+        #8. Análisis de PaaS
+        self.paas(similar_domain)
 
 
 SIMILAR_DOMAIN_ANALYSER = SimilarDomainAnalyser()

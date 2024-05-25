@@ -2,7 +2,7 @@ legitec.com - Dominio original
 ======================================================================
 
 Nombre de dominio parecido                   iegitec.com
-Dominio original                             legitec.com
+Dominio original                             legitec.com in PoC_TFG - URLs: ['https://legitec.com', 'https://formacion.legitec.com/acceso']
 Fecha de aparicion                           None
 Fecha de creacion del dominio                2023-12-14T07:42:33Z
 Fecha de ultima actualizacion del dominio    2023-12-14T07:42:38Z
@@ -21,12 +21,24 @@ Numero de enlaces externos                   16
 Referencias al dominio original?             False
 Formulario de login?                         True
 Enlaces enganosos                            No bad links found
-Similitud visual                             No visual similarity found
+Similitud visual                             [
+    {
+        "dft_web": 5.721818452051184e-06,
+        "dct_web": 0,
+        "favicon": 0
+    },
+    {
+        "dft_web": 1.2842287209952048e-05,
+        "dct_web": 0,
+        "favicon": 0
+    }
+]
 Hallazgos de herramientas PaaS               0
+
 Ultima fecha de analisis                     None
 Proxima fecha de analisis                    None
 
-------------------------- Phishing -------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~ Phishing ~~~~~~~~~~~~~~~~~~~~~~~~~
 Es Phishing?                                 False
 
 

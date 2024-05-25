@@ -1,5 +1,6 @@
 from django.db import models
 from main.models import Domain
+import json
 
 # Create your models here.
 
@@ -189,11 +190,11 @@ class SimilarDomain(models.Model):
             f"{self.__get_verbose_name('is_original_domain'):{label_width}}{self.is_original_domain}\n"
             f"{self.__get_verbose_name('is_login_form'):{label_width}}{self.is_login_form}\n"
             f"{self.__get_verbose_name('bad_links'):{label_width}}{self.bad_links if self.bad_links else 'No bad links found'}\n"
-            f"{self.__get_verbose_name('visual_similarity'):{label_width}}{self.visual_similarity if self.visual_similarity else 'No visual similarity found'}\n"
-            f"{self.__get_verbose_name('paas_tools'):{label_width}}{self.paas_tools}\n"
-            f"{self.__get_verbose_name('last_analysis_date'):{label_width}}{self.last_analysis_date}\n"
-            f"{self.__get_verbose_name('next_analysis_date'):{label_width}}{self.next_analysis_date}\n"
-            f"\n{'-'*25} Phishing {'-'*25}\n"
+            f"{self.__get_verbose_name('visual_similarity'):{label_width}}{json.dumps(self.visual_similarity if self.visual_similarity else 'No visual similarity found', indent=4)}\n"
+            f"{self.__get_verbose_name('paas_tools'):{label_width}}{self.paas_tools}\n\n"
+            # f"{self.__get_verbose_name('last_analysis_date'):{label_width}}{self.last_analysis_date}\n"
+            # f"{self.__get_verbose_name('next_analysis_date'):{label_width}}{self.next_analysis_date}\n"
+            f"\n{'~'*25} Phishing {'~'*25}\n"
             f"{self.__get_verbose_name('is_phishing'):{label_width}}{self.is_phishing}\n"
         )
 

@@ -7,10 +7,14 @@ from .check_phishing.similar_domains_analyser import SIMILAR_DOMAIN_ANALYSER
 
 class ProactiveAnalyser:
     def proactive_analysis(self, domain: Domain) -> str:
+        """
+        Función para realizar un análisis proactivo de un dominio
+        """
+        print(f"{'='*50}\n[*] Analizando dominio {domain} de forma proactiva\n{'='*50}")
         # Aquí es donde se desarrolla el análisis de cada dominio
         # 1. Encontrar los dominios8 parecidos
         similar_domains = [] #DOMAIN_FINDER.find(domain) # TODO No limitar las búsquedas
-        similar_domains.append(SimilarDomain(name='iegitec.com', original_domain=Domain(name='legitec.com')))# TODO borrar
+        similar_domains.append(SimilarDomain(name='iegitec.com', original_domain=domain))# TODO borrar
         # 2. Analizar cada dominio parecido para comprobar si es phishing
         for sm in sorted(similar_domains):
             SIMILAR_DOMAIN_ANALYSER.analyse(sm)
