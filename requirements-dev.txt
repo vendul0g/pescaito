@@ -6,3 +6,9 @@ dnstwist==20240116
 ail-typo-squatting==2.7.4
 pytz==2024.1
 pycrtsh==0.3.11
+selenium
+numpy
+opencv-python-headless
+matplotlib
+webdriver-manager
+scikit-image
