@@ -54,8 +54,10 @@ class VisualAnalyser:
         print(f"[*] Files: {file1} and {file2}")
 
         # Obtenemos las imágenes de las web
-        self.__take_screenshot(url1, file1)
-        self.__take_screenshot(url2, file2)
+        if not os.path.exists(file1):
+            self.__take_screenshot(url1, file1)
+        if not os.path.exists(file2):
+            self.__take_screenshot(url2, file2)
 
         # Comparamos las imágenes
         # 1. DFT

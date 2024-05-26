@@ -35,10 +35,9 @@ Similitud visual                             [
 ]
 Hallazgos de herramientas PaaS               0
 
-Ultima fecha de analisis                     None
-Proxima fecha de analisis                    None
 
-~~~~~~~~~~~~~~~~~~~~~~~~~ Phishing ~~~~~~~~~~~~~~~~~~~~~~~~~
-Es Phishing?                                 False
+~~~~~~~~~~~~~~~~~~~~~~~~~ Results ~~~~~~~~~~~~~~~~~~~~~~~~~
+Peso total                                   72.4
+Es Phishing?                                 True
 
 

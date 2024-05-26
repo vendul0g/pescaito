@@ -4,6 +4,7 @@ from main.models import Domain
 from proactive.models import SimilarDomain
 from .domains_finder.domains_finder import DOMAIN_FINDER
 from .check_phishing.similar_domains_analyser import SIMILAR_DOMAIN_ANALYSER
+from .reporter import REPORTER
 
 class ProactiveAnalyser:
     def proactive_analysis(self, domain: Domain) -> str:
@@ -15,11 +16,17 @@ class ProactiveAnalyser:
         # 1. Encontrar los dominios8 parecidos
         similar_domains = [] #DOMAIN_FINDER.find(domain) # TODO No limitar las búsquedas
         similar_domains.append(SimilarDomain(name='iegitec.com', original_domain=domain))# TODO borrar
-        # 2. Analizar cada dominio parecido para comprobar si es phishing
+        # 2. Analizar cada dominio parecido y comprobar si es phishing
         for sm in sorted(similar_domains):
+            # Análisis
             SIMILAR_DOMAIN_ANALYSER.analyse(sm)
+            # Comprobación de phishing
+            is_phishing = REPORTER.check_phishing(sm)
+            if is_phishing:
+                pass # TODO enviar correos
 
-        # 3. Devolver los resultados
+
+        # 4. Devolver los resultados
         # Creamos una respuesta
         file_content = f"{domain.name} - Dominio original\n{'='*70}\n\n"
         for r in similar_domains:

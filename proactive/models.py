@@ -124,6 +124,7 @@ class SimilarDomain(models.Model):
 
     # Indica si existen enlaces sospechosos en la página (lista de str)
     bad_links = models.JSONField(
+        default=list,
         verbose_name="Enlaces enganosos",
     )
 
@@ -142,6 +143,12 @@ class SimilarDomain(models.Model):
     is_phishing = models.BooleanField(
         default=False,
         verbose_name="Es Phishing?",
+    )
+
+    # Indica el peso total de los parámetros
+    total_weight = models.FloatField(
+        default=0.0,
+        verbose_name="Peso total",
     )
 
     # Indica la última fecha de análisis
@@ -168,10 +175,12 @@ class SimilarDomain(models.Model):
         return self._meta.get_field(field).verbose_name
 
     def __str__(self):
-        label_width = 45 # Ancho de la etiqueta
+        label_width = 45  # Ancho de la etiqueta
         return (
             f"{self.__get_verbose_name('name'):{label_width}}{self.name}\n"
-            f"{self.__get_verbose_name('original_domain'):{label_width}}{self.original_domain}\n"
+            f"{self.__get_verbose_name('original_domain'):{label_width}}{self.original_domain.name}\n"
+            f"{'':label_width}Proyecto: {self.original_domain.project.name}\n"
+            f"{'':label_width}URLs: {self.original_domain.urls}\n\n"
             f"{self.__get_verbose_name('found_date'):{label_width}}{self.found_date}\n"
             f"{self.__get_verbose_name('creation_date'):{label_width}}{self.creation_date}\n"
             f"{self.__get_verbose_name('updated_date'):{label_width}}{self.updated_date}\n"
@@ -194,10 +203,10 @@ class SimilarDomain(models.Model):
             f"{self.__get_verbose_name('paas_tools'):{label_width}}{self.paas_tools}\n\n"
             # f"{self.__get_verbose_name('last_analysis_date'):{label_width}}{self.last_analysis_date}\n"
             # f"{self.__get_verbose_name('next_analysis_date'):{label_width}}{self.next_analysis_date}\n"
-            f"\n{'~'*25} Phishing {'~'*25}\n"
+            f"\n{'~'*25} Results {'~'*25}\n"
+            f"{self.__get_verbose_name('total_weight'):{label_width}}{self.total_weight}\n"
             f"{self.__get_verbose_name('is_phishing'):{label_width}}{self.is_phishing}\n"
         )
-
 
     def __eq__(self, other):
         if isinstance(other, SimilarDomain):
@@ -206,7 +215,7 @@ class SimilarDomain(models.Model):
 
     def __hash__(self):
         return hash(self.name)
-    
+
     def __lt__(self, other):
         # Comparar por nombre para ordenar
         if isinstance(other, SimilarDomain):
