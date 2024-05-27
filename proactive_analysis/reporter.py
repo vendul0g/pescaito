@@ -8,7 +8,7 @@ DATE_FORMAT = "%Y-%m-%dT%H:%M:%SZ"
 SUSPICIOUS_CREATION_DATE = 2
 LETS_ENCRYPT_CA = "Let's Encrypt"
 THRESHOLD_VISUAL_SIMILARITY = 1 * 10**-6
-THRESHOLD_PHISHING = 70
+THRESHOLD_PHISHING = 60
 THRESHOLD_PAAS = 5
 
 # Pesos
@@ -30,6 +30,7 @@ class Reporter:
         Comprueba si un dominio es phishing o no.
         """
         # Inicializamos el peso
+        print(f"[*] Reporter analizando {similar_domain.name}: 0")
         weight = 0.0
 
         # Fecha compra Whois
@@ -37,41 +38,54 @@ class Reporter:
         creation_date = datetime.strptime(similar_domain.creation_date, DATE_FORMAT)
         if (datetime.now().year - creation_date.year) <= SUSPICIOUS_CREATION_DATE:
             weight += WEIGHT_CREATION_DATE
+            print(
+                f"[+] fecha de creación inferior a {SUSPICIOUS_CREATION_DATE} años - {weight}"
+            )
 
         # Existencia certificado TLS
 
-        if similar_domain.is_certificate_tls:
+        if not similar_domain.is_certificate_tls:
             weight += WEIGHT_IS_TLS_CERTIFICATE
+            print("[+] No tiene certificado TLS - {weight}")
 
         # CA certificado TLS
         if similar_domain.tls_certificate_ca == LETS_ENCRYPT_CA:
             weight += WEIGHT_IS_TLS_CERTIFICATE
+            print(f"[+] CA del certificado TLS es {LETS_ENCRYPT_CA} - {weight}")
 
         # Primer certificado TLS
         if (
             datetime.now().year - similar_domain.tls_certificate_oldest_date.year
         ) <= SUSPICIOUS_CREATION_DATE:
             weight += WEIGHT_OLDEST_CERTIFICATE
+            print(
+                f"[+] Certificado TLS más antiguo inferior a {SUSPICIOUS_CREATION_DATE} años - {weight}"
+            )
 
         # Redirección al mismo dominio
         if not similar_domain.is_redirect_same_domain:
             weight += WEIGHT_REDIRECT_SAME_DOMAIN
+            print(f"[+] Redirección a otro dominio - {weight}")
 
         # Caracteres especiales URL final
         if similar_domain.has_redirect_special_chars:
             weight += WEIGHT_SPECIAL_CHARS
+            print(f"[+] URL final contiene caracteres especiales - {weight}")
 
         # Número de recursos externos vs internos
         if similar_domain.external_links > similar_domain.internal_links:
             weight += WEIGHT_EXTERNAL_LINKS
+            print(f"[+] Más enlaces externos que internos - {weight}")
 
         # Existencia de formulario de login
         if similar_domain.is_login_form:
             weight += WEIGHT_LOGIN_FORM
+            print(f"[+] Existe formulario de login - {weight}")
 
         # Número de enlaces maliciosos
         if len(similar_domain.bad_links) > 0:
             weight += WEIGHT_BAD_LINKS
+            print(f"[+] Enlaces maliciosos detectados - {weight}")
 
         # Similaridad visual
         for r in similar_domain.visual_similarity:
@@ -81,19 +95,22 @@ class Reporter:
                 or r["favicon"] < THRESHOLD_VISUAL_SIMILARITY
             ):
                 weight += WEIGHT_VISUAL_SIMILARITY
+                print(f"[+] Similitud visual detectada - {weight}")
                 break
 
         # PaaS
         if similar_domain.paas_tools > THRESHOLD_PAAS:
             weight += WEIGHT_PAAS
+            print("[+] Herramientas PaaS detectadas - {weight}")
 
         # Actualizamos la información del dominio parecido
         similar_domain.total_weight = weight
 
-        if weight > THRESHOLD_PHISHING:
+        if weight >= THRESHOLD_PHISHING:
             similar_domain.is_phishing = True
 
         # Devolvemos si es phishing o no
+        print(f"[+] Peso total: {weight} --> phishing? {similar_domain.is_phishing}")
         return similar_domain.is_phishing
 
 

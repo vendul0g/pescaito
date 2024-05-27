@@ -2,7 +2,9 @@ legitec.com - Dominio original
 ======================================================================
 
 Nombre de dominio parecido                   iegitec.com
-Dominio original                             legitec.com in PoC_TFG - URLs: ['https://legitec.com', 'https://formacion.legitec.com/acceso']
+Dominio original                             legitec.com
+                                             Proyecto: PoC_TFG
+                                             URLs: ['https://legitec.com', 'https://formacion.legitec.com/acceso']
 Fecha de aparicion                           None
 Fecha de creacion del dominio                2023-12-14T07:42:33Z
 Fecha de ultima actualizacion del dominio    2023-12-14T07:42:38Z
@@ -16,7 +18,7 @@ Fecha del certificado TLS mas antiguo        2023-12-14 07:09:51
 URL final de las redirecciones HTTP          https://iegitec.com:443/
 Redirecciona al mismo dominio?               True
 Contiene caracteres especiales?              False
-Numero de enlaces internos                   20
+Numero de enlaces internos                   21
 Numero de enlaces externos                   16
 Referencias al dominio original?             False
 Formulario de login?                         True
@@ -37,7 +39,7 @@ Hallazgos de herramientas PaaS               0
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~ Results ~~~~~~~~~~~~~~~~~~~~~~~~~
-Peso total                                   72.4
+Peso total                                   64.1
 Es Phishing?                                 True
 
 

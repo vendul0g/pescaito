@@ -179,8 +179,8 @@ class SimilarDomain(models.Model):
         return (
             f"{self.__get_verbose_name('name'):{label_width}}{self.name}\n"
             f"{self.__get_verbose_name('original_domain'):{label_width}}{self.original_domain.name}\n"
-            f"{'':label_width}Proyecto: {self.original_domain.project.name}\n"
-            f"{'':label_width}URLs: {self.original_domain.urls}\n\n"
+            f"{'':{label_width}}Proyecto: {self.original_domain.project.name}\n"
+            f"{'':{label_width}}URLs: {self.original_domain.urls}\n"
             f"{self.__get_verbose_name('found_date'):{label_width}}{self.found_date}\n"
             f"{self.__get_verbose_name('creation_date'):{label_width}}{self.creation_date}\n"
             f"{self.__get_verbose_name('updated_date'):{label_width}}{self.updated_date}\n"
