@@ -112,8 +112,13 @@ a.js-forgotMyPassword {
   font-size: 0.875rem; 
 }
 
-/* @media screen and (max-width: 400px) {
-  button.classonlive-button {
-    width: 120px;
+@media screen and (max-width: 1000px) {
+  .classonlive-section-content {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 8px;
+    max-width: none;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
-} */
+}
