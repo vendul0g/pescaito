@@ -18,3 +18,8 @@ db.sqlite3*
 *.log
 *.pid
 *.sock
+
+# Cloned website
+_website_cloned
+_media/*
+
