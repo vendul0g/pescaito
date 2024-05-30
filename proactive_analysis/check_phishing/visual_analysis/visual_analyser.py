@@ -5,8 +5,11 @@ from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
 from webdriver_manager.firefox import GeckoDriverManager
 from .dft_comparator import DFT_COMPARATOR
+from .dct_comparator import DCT_COMPARATOR
 from django.conf import settings
 
+# Constante para la espera de carga de la página
+TIMEOUT = 5
 
 class VisualAnalyser:
     """
@@ -28,7 +31,7 @@ class VisualAnalyser:
         )
         driver.get(url)
         # Add a delay to allow the page to fully load
-        time.sleep(10)
+        time.sleep(TIMEOUT)
         driver.save_screenshot(file_name)
         driver.quit()
 
@@ -64,7 +67,7 @@ class VisualAnalyser:
         r1 = DFT_COMPARATOR.compare_images(file1, file2)
 
         # 2. DCT TODO implementar
-        r2 = self.__favicon_analyse(url1, url2)
+        r2 = DCT_COMPARATOR.compare_images(file1, file2)
 
         return r1, r2
 

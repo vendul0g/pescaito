@@ -7,7 +7,8 @@ DATE_FORMAT = "%Y-%m-%dT%H:%M:%SZ"
 # Comparaciones
 SUSPICIOUS_CREATION_DATE = 2
 LETS_ENCRYPT_CA = "Let's Encrypt"
-THRESHOLD_VISUAL_SIMILARITY = 1 * 10**-6
+THRESHOLD_DFT_VISUAL_SIMILARITY = 1 * 10**-6
+THRESHOLD_DCT_VISUAL_SIMILARITY = 0.01
 THRESHOLD_PHISHING = 60
 THRESHOLD_PAAS = 5
 
@@ -90,9 +91,9 @@ class Reporter:
         # Similaridad visual
         for r in similar_domain.visual_similarity:
             if (
-                r["dft_web"] < THRESHOLD_VISUAL_SIMILARITY
-                or r["dct_web"] < THRESHOLD_VISUAL_SIMILARITY
-                or r["favicon"] < THRESHOLD_VISUAL_SIMILARITY
+                r["dft_web"] < THRESHOLD_DFT_VISUAL_SIMILARITY
+                or r["dct_web"] < THRESHOLD_DCT_VISUAL_SIMILARITY
+                or r["favicon"] < THRESHOLD_DCT_VISUAL_SIMILARITY
             ):
                 weight += WEIGHT_VISUAL_SIMILARITY
                 print(f"[+] Similitud visual detectada - {weight}")
