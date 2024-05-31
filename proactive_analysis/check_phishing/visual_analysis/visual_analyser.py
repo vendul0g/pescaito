@@ -6,10 +6,12 @@ from selenium.webdriver.firefox.options import Options
 from webdriver_manager.firefox import GeckoDriverManager
 from .dft_comparator import DFT_COMPARATOR
 from .dct_comparator import DCT_COMPARATOR
+from .favicon_comparator import FAVICON_COMPARATOR
 from django.conf import settings
 
-# Constante para la espera de carga de la página
+# Constantes
 TIMEOUT = 5
+FIREFOX_PATH = "/home/alvaro/Documents/firefox/firefox"
 
 class VisualAnalyser:
     """
@@ -24,7 +26,7 @@ class VisualAnalyser:
         """
         options = Options()
         options.headless = True
-        options.binary_location = "/home/alvaro/Documents/firefox/firefox"
+        options.binary_location = FIREFOX_PATH
 
         driver = webdriver.Firefox(
             service=Service(GeckoDriverManager().install()), options=options
@@ -39,7 +41,38 @@ class VisualAnalyser:
         """
         Método para analizar el contenido visual de dos favicon
         """
-        return 0  # TODO implementar
+        # Conseguimos la URL del favicon
+        favicon1 = FAVICON_COMPARATOR.get_favicon_url(url1)
+        favicon2 = FAVICON_COMPARATOR.get_favicon_url(url2)
+
+        # Comprobamos errores
+        if not favicon1 or not favicon2:
+            return 0
+        
+        print(f"[*] Favicons: {favicon1} and {favicon2}")
+
+        # Inicializamos la ruta de almacenamiento de los ficheros
+        file1 = os.path.join(
+            settings.MEDIA_ROOT,
+            f"favicon_{url1.split('//')[1].replace('.', '_').replace('/', '-')}.png",
+        )
+
+        file2 = os.path.join(
+            settings.MEDIA_ROOT,
+            f"favicon_{url2.split('//')[1].replace('.', '_').replace('/', '-')}.png",
+        )
+
+        # Guardamos el favicon
+        if not os.path.exists(file1):
+            self.__take_screenshot(favicon1, file1)
+        if not os.path.exists(file2):
+            self.__take_screenshot(favicon2, file2)
+        
+        # Comparamos los favicons
+        r = FAVICON_COMPARATOR.compare_favicons(file1, file2)
+
+        print(f"[*] Favicon similarity: {r}")
+        return r
 
     def __webpage_analyse(self, url1: str, url2: str) -> tuple:
         """

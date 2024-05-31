@@ -12,3 +12,6 @@ opencv-python-headless
 matplotlib
 webdriver-manager
 scikit-image
+scipy
+favicon
+cfscrape
