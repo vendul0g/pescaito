@@ -43,16 +43,25 @@ def check_robots_txt(url):
         print(f"Error fetching robots.txt: {e}")
         return False
 
-def check_gophish(url):
+def check_gophish(url: str) -> int:
+    # Inicializamos el contador
+    counter = 0
+
+    # Hacemos las comprobaciones
     main_page_results = check_main_page(url)
     robots_txt_accessible = check_robots_txt(url)
 
+    # Vemos los resultados
     print("Main Page Check Results:")
     for key, value in main_page_results.items():
         print(f"{key}: {value}")
-    
+        if value:
+            counter += 1
     print(f"Robots.txt accessible: {robots_txt_accessible}")
+    
+    # Devolvemos el contador
+    return counter
 
 # Example usage
 url = "https://iegitec.com"
-perform_checks(url)
+print(f"Counter checks = {check_gophish(url)}")
