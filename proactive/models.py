@@ -171,6 +171,47 @@ class SimilarDomain(models.Model):
         verbose_name = "Dominio parecido"
         ordering = ["-found_date"]
 
+    def get_html_content(self) -> str:
+        label_width = 45  # Ancho de la etiqueta
+        return f"""
+        <html>
+        <body>
+            <pre>
+{self.__get_verbose_name('name'):{label_width}}{self.name}
+{'-'*80}
+{self.__get_verbose_name('original_domain'):{label_width}}{self.original_domain.name}
+Proyecto:\t{self.original_domain.project.name}
+URLs:\t{', '.join(self.original_domain.urls)}
+{'-'*80}
+{self.__get_verbose_name('found_date'):{label_width}}{self.found_date}
+{self.__get_verbose_name('creation_date'):{label_width}}{self.creation_date}
+{self.__get_verbose_name('updated_date'):{label_width}}{self.updated_date}
+{self.__get_verbose_name('expiration_date'):{label_width}}{self.expiration_date}
+{self.__get_verbose_name('tld_country'):{label_width}}{self.tld_country}
+{self.__get_verbose_name('ip_countries'):{label_width}}{self.ip_countries if self.ip_countries else 'No country found'}
+{self.__get_verbose_name('is_certificate_tls'):{label_width}}{self.is_certificate_tls}
+{self.__get_verbose_name('tls_certificate_ca'):{label_width}}{self.tls_certificate_ca}
+{self.__get_verbose_name('tls_certificate_creation_date'):{label_width}}{self.tls_certificate_creation_date}
+{self.__get_verbose_name('tls_certificate_oldest_date'):{label_width}}{self.tls_certificate_oldest_date}
+{self.__get_verbose_name('final_url'):{label_width}}{self.final_url}
+{self.__get_verbose_name('is_redirect_same_domain'):{label_width}}{self.is_redirect_same_domain}
+{self.__get_verbose_name('has_redirect_special_chars'):{label_width}}{self.has_redirect_special_chars}
+{self.__get_verbose_name('internal_links'):{label_width}}{self.internal_links}
+{self.__get_verbose_name('external_links'):{label_width}}{self.external_links}
+{self.__get_verbose_name('is_original_domain'):{label_width}}{self.is_original_domain}
+{self.__get_verbose_name('is_login_form'):{label_width}}{self.is_login_form}
+{self.__get_verbose_name('bad_links'):{label_width}}{self.bad_links if self.bad_links else 'No bad links found'}
+{self.__get_verbose_name('visual_similarity'):{label_width}}{json.dumps(self.visual_similarity if self.visual_similarity else 'No visual similarity found', indent=4)}
+{self.__get_verbose_name('paas_tools'):{label_width}}{self.paas_tools}
+{'~'*50}
+Results:
+{self.__get_verbose_name('total_weight'):{label_width}}{self.total_weight}
+{self.__get_verbose_name('is_phishing'):{label_width}}{self.is_phishing}
+            </pre>
+        </body>
+        </html>
+        """
+
     def __get_verbose_name(self, field):
         return self._meta.get_field(field).verbose_name
 
@@ -178,10 +219,10 @@ class SimilarDomain(models.Model):
         label_width = 45  # Ancho de la etiqueta
         return (
             f"{self.__get_verbose_name('name'):{label_width}}{self.name}\n"
+            f"{self.__get_verbose_name('found_date'):{label_width}}{self.found_date}\n"
             f"{self.__get_verbose_name('original_domain'):{label_width}}{self.original_domain.name}\n"
             f"{'':{label_width}}Proyecto: {self.original_domain.project.name}\n"
             f"{'':{label_width}}URLs: {self.original_domain.urls}\n"
-            f"{self.__get_verbose_name('found_date'):{label_width}}{self.found_date}\n"
             f"{self.__get_verbose_name('creation_date'):{label_width}}{self.creation_date}\n"
             f"{self.__get_verbose_name('updated_date'):{label_width}}{self.updated_date}\n"
             f"{self.__get_verbose_name('expiration_date'):{label_width}}{self.expiration_date}\n"

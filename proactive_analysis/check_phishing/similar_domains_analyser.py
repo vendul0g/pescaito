@@ -7,6 +7,7 @@ from .certificates.tls_certificates import TLS_CERTIFICATE_ANALYSER, TLS_PARSER
 from .redirections import REDIRECT_ANALYSER
 from .html_analyser.html_analyse import HTML_ANALYSER
 from .visual_analysis.visual_analyser import VISUAL_ANALYSER
+from .paas_checker import PAAS_CHECKER
 
 # Variables globales
 HTTP_PORT = 80
@@ -125,8 +126,7 @@ class SimilarDomainAnalyser:
         Realiza un análisis de las herramientas PaaS utilizadas en el dominio similar.
         - GoPhish
         """
-        # TODO implementar
-        similar_domain.paas_tools = 0
+        similar_domain.paas_tools = PAAS_CHECKER.check_gophish(similar_domain.final_url)
 
     def analyse(self, similar_domain: SimilarDomain):
         """

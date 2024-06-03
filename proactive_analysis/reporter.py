@@ -1,5 +1,9 @@
-from proactive.models import SimilarDomain
+import os
 from datetime import datetime
+from email.mime.image import MIMEImage
+from django.core.mail import EmailMultiAlternatives
+from django.conf import settings
+from proactive.models import SimilarDomain
 
 # Formato de fecha
 DATE_FORMAT = "%Y-%m-%dT%H:%M:%SZ"
@@ -26,6 +30,72 @@ WEIGHT_PAAS = 11.2
 
 
 class Reporter:
+    def report(self, similar_domain: SimilarDomain):
+        """
+        Función para reportar los resultados del análisis proactivo a organizaciones
+        anti-phishing
+        """
+        print(f"[*] Reporter enviando email de reporte a {settings.ADMIN_EMAIL}")
+
+        subject = f"[!] Sistema Proactivo: reporte dominio similar ({similar_domain.name})"
+        email_from = settings.EMAIL_HOST_USER
+        recipient_list = [settings.ADMIN_EMAIL, similar_domain.original_domain.admin_email]
+
+        html_content = f"""
+        <html>
+        <body>
+            <h1>Información recogida:</h1>
+            {similar_domain.get_html_content()}
+            <br><br><hr><hr>
+            <h1>Webs originales:</h1>
+        """
+
+        # Attach each image for the original domains
+        for idx, url in enumerate(similar_domain.original_domain.urls):
+            image_path = os.path.join(
+                settings.MEDIA_ROOT,
+                f"{url.split('//')[1].replace('.', '_').replace('/', '-')}.png",
+            )
+            # Adjust size: specify width and/or height
+            html_content += f'<p><img src="cid:image{idx}" style="width:600px; height:auto;"></p>'
+
+        # Attach the image for the phishing web
+        phishing_image_path = os.path.join(
+            settings.MEDIA_ROOT,
+            f"{similar_domain.final_url.split('//')[1].replace('.', '_').replace('/', '-')}.png",
+        )
+        html_content += """
+            <hr>
+            <h1>Web phishing:</h1>
+            <p><img src="cid:image_phishing" style="width:600px; height:auto;"></p>
+        </body>
+        </html>
+        """
+
+        # Create the email message
+        msg = EmailMultiAlternatives(subject, "", email_from, recipient_list)
+        msg.attach_alternative(html_content, "text/html")
+
+        # Attach the images to the email
+        for idx, url in enumerate(similar_domain.original_domain.urls):
+            image_path = os.path.join(
+                settings.MEDIA_ROOT,
+                f"{url.split('//')[1].replace('.', '_').replace('/', '-')}.png",
+            )
+            with open(image_path, "rb") as f:
+                msg_image = MIMEImage(f.read())
+                msg_image.add_header("Content-ID", f"<image{idx}>")
+                msg.attach(msg_image)
+
+        # Attach the phishing image
+        with open(phishing_image_path, "rb") as f:
+            msg_image = MIMEImage(f.read())
+            msg_image.add_header("Content-ID", "<image_phishing>")
+            msg.attach(msg_image)
+
+        # Send the email
+        msg.send()
+
     def check_phishing(self, similar_domain: SimilarDomain) -> bool:
         """
         Comprueba si un dominio es phishing o no.
@@ -55,13 +125,15 @@ class Reporter:
             print(f"[+] CA del certificado TLS es {LETS_ENCRYPT_CA} - {weight}")
 
         # Primer certificado TLS
-        if (
-            datetime.now().year - similar_domain.tls_certificate_oldest_date.year
-        ) <= SUSPICIOUS_CREATION_DATE:
-            weight += WEIGHT_OLDEST_CERTIFICATE
-            print(
-                f"[+] Certificado TLS más antiguo inferior a {SUSPICIOUS_CREATION_DATE} años - {weight}"
-            )
+        # Comprobamos si no es None el tls_certificate_oldest_date
+        if similar_domain.tls_certificate_oldest_date:
+            if (
+                datetime.now().year - similar_domain.tls_certificate_oldest_date.year
+            ) <= SUSPICIOUS_CREATION_DATE:
+                weight += WEIGHT_OLDEST_CERTIFICATE
+                print(
+                    f"[+] Certificado TLS más antiguo inferior a {SUSPICIOUS_CREATION_DATE} años - {weight}"
+                )
 
         # Redirección al mismo dominio
         if not similar_domain.is_redirect_same_domain:

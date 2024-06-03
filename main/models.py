@@ -48,6 +48,34 @@ class Domain(models.Model):
         blank=True,
     )
 
+    admin_email = models.EmailField(
+        verbose_name="email de administrador",
+        help_text="Introduce el email del administrador, al que llegarán las alertas.",
+        blank=True,
+    )
+
+    token = models.CharField(
+        verbose_name="Token",
+        max_length=256,
+    )
+
+    federation_domain = models.ForeignKey(
+        'self',
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="federated_domain",
+        verbose_name="Dominio con federación",
+        help_text="Introduce el dominio si existe una federación con otra organización",
+        blank=True,
+    )
+
+    canary_token = models.CharField(
+        verbose_name="Canary Token",
+        max_length=256,
+        help_text="Introduce el token canario para la autenticación",
+        blank=True,
+    )
+
     class Meta:
         verbose_name = "dominio"
         ordering = ["-created"]

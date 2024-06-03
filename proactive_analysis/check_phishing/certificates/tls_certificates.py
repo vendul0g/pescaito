@@ -35,7 +35,7 @@ class TLSCertificateChecker:
         """
         try:
             print(
-                "[-] Conectando con el dominio para obtener el certificado TLS - dominio:",
+                "[*] Conectando con el dominio para obtener el certificado TLS - dominio:",
                 self.domain,
             )
             with socket.create_connection((self.domain, 443), timeout=10) as sock:
@@ -83,13 +83,19 @@ class CRTHistoryChecker:
         """
         Consulta crt.sh para obtener datos históricos de certificados del dominio.
         """
-        certs = self.service.search(self.domain)
-        return certs
+        try:
+            certs = self.service.search(self.domain, timeout=10)
+            return certs
+        except Exception as e:
+            print(f"[!] Error al obtener datos de crt.sh: {e}")
+            return None
 
     def find_oldest_certificate(self, crt_data: list) -> datetime:
         """
         Encuentra el certificado más antiguo del conjunto de datos obtenidos de crt.sh.
         """
+        if not crt_data:
+            return None
         oldest_certificate_date = None
         for cert in crt_data:
             if (
@@ -106,7 +112,7 @@ class TLSCertificateAnalyser:
         Obtiene información del certificado TLS de un dominio, incluyendo detalles actuales 
         y el certificado más antiguo.
         """
-        print(f"[-] Analizando certificado TLS para {similar_domain_name}")
+        print(f"[*] Analizando certificado TLS para {similar_domain_name}")
         tls_checker = TLSCertificateChecker(similar_domain_name)
         crt_history_checker = CRTHistoryChecker(similar_domain_name)
 
@@ -114,8 +120,11 @@ class TLSCertificateAnalyser:
         info_current_cert = tls_checker.extract_certificate_info(cert)
 
         crt_data = crt_history_checker.get_historical_certificates()
+        # print(f"[*] Crt.sh data: {crt_data if crt_data else 'No data'}")
+
         oldest_certificate_date = crt_history_checker.find_oldest_certificate(crt_data)
 
+        print(f"[+] Certificado TLS antiguo: {oldest_certificate_date}")
         # Devolvemosl los resultados
         return info_current_cert, oldest_certificate_date
 

@@ -1,3 +1,5 @@
+import json
+import hashlib
 from django.contrib import (
     admin,
     messages,
@@ -5,7 +7,6 @@ from django.contrib import (
 from django import forms
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
-import json
 from django.db.models import QuerySet
 from django.http import HttpRequest
 from django.utils.safestring import mark_safe
@@ -61,6 +62,15 @@ class DomainForm(forms.ModelForm):
                     raise ValidationError(f"{url} is not a valid URL")
         return cleaned_urls
 
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        # Generate or set the token value here
+        if not instance.token:
+            instance.token = hashlib.sha256(instance.name.encode()).hexdigest()
+        if commit:
+            instance.save()
+        return instance
+
     class Meta:
         model = Domain
         fields = "__all__"
@@ -105,6 +115,6 @@ class DomainAdmin(admin.ModelAdmin):
 
     autocomplete_fields = ("project",)
 
-    readonly_fields = ("created",)
+    readonly_fields = ("created","token")
 
     actions = (analyse_domains,)
