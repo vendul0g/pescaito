@@ -43,7 +43,7 @@ class Domain(models.Model):
 
     urls = models.JSONField(
         verbose_name="URLs",
-        help_text="Enter a list of URLs.",
+        help_text="Introduce las URLs del dominio en formato JSON. Ejemplo: [\"https://example.com\", \"https://anotherexample.com\"]",
         default=list,
         blank=True,
     )
@@ -69,10 +69,10 @@ class Domain(models.Model):
         blank=True,
     )
 
-    canary_token = models.CharField(
+    canary_token = models.URLField(
         verbose_name="Canary Token",
         max_length=256,
-        help_text="Introduce el token canario para la autenticación",
+        help_text="URL de los Canary Token para la protección anti-clonado del dominio",
         blank=True,
     )
 
@@ -81,7 +81,7 @@ class Domain(models.Model):
         ordering = ["-created"]
 
     def __str__(self) -> str:
-        return str(f"{self.name} in {self.project} - URLs: {self.urls}")
+        return str(f"{self.name}")
 
     def analyse(self) -> str:
         # Llamamos al analizador de dominios proactivo
@@ -89,3 +89,9 @@ class Domain(models.Model):
         from proactive_analysis.proactive_analyser import PROACTIVE_ANALYSER
 
         return PROACTIVE_ANALYSER.proactive_analysis(self)
+
+    def generate_canary_token(self) -> str:
+        # Generamos el token canario
+        from canary.token_generator import TOKEN_GENERATOR
+
+        return TOKEN_GENERATOR.generate_canary_token(self)

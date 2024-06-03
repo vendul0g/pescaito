@@ -10,6 +10,7 @@ from django.core.exceptions import ValidationError
 from django.db.models import QuerySet
 from django.http import HttpRequest
 from django.utils.safestring import mark_safe
+from django.utils.html import format_html
 from django.conf import settings
 from main.models import (
     Domain,
@@ -45,7 +46,7 @@ class DomainForm(forms.ModelForm):
     urls = JSONURLField(
         widget=forms.Textarea,
         required=False,
-        help_text="Enter URLs as a JSON array, e.g., [\"https://example.com\", \"https://anotherexample.com\"]",
+        help_text="Introduce las URLs en formato JSON, p.e., [\"https://example.com\", \"https://anotherexample.com\"]",
     )
 
     def clean_urls(self):
@@ -64,11 +65,15 @@ class DomainForm(forms.ModelForm):
 
     def save(self, commit=True):
         instance = super().save(commit=False)
-        # Generate or set the token value here
+        # Generamos el token si no está definido
         if not instance.token:
             instance.token = hashlib.sha256(instance.name.encode()).hexdigest()
         if commit:
             instance.save()
+
+        # Generamos los canary token
+        instance.generate_canary_token()
+
         return instance
 
     class Meta:
@@ -104,6 +109,19 @@ def analyse_domains(
         )
         messages.success(request, answer)
 
+@admin.action(description="Generar Canary Token")
+def generate_canary_token(
+    modeladmin: "DomainAdmin", request: HttpRequest, queryset: "QuerySet['Domain']"
+) -> None:
+    for domain in queryset:
+        # Generamos el token canario
+        url = domain.generate_canary_token()
+        file_url = request.build_absolute_uri(settings.MEDIA_URL + url)
+        # Devolvemos la respuesta a la interfaz web
+        answer = mark_safe(
+            f"Token canario para {domain.name} generado. Consulta el fichero <a href='{file_url}'>aquí</a>."
+        )
+        messages.success(request, answer)
 
 @admin.register(Domain)
 class DomainAdmin(admin.ModelAdmin):
@@ -115,6 +133,8 @@ class DomainAdmin(admin.ModelAdmin):
 
     autocomplete_fields = ("project",)
 
-    readonly_fields = ("created","token")
+    readonly_fields = ("created","token","canary_token")
 
-    actions = (analyse_domains,)
+    url_fields = ("canary_token",)
+    
+    actions = (analyse_domains,generate_canary_token)

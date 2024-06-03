@@ -26,7 +26,7 @@ class ProactiveAnalyser:
             if is_phishing:
                 # Alertamos
                 print(f"[!] {sm.name} es phishing")
-            REPORTER.report(sm)
+                REPORTER.report(sm)
 
 
         # 4. Devolver los resultados
