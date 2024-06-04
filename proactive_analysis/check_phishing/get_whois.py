@@ -1,6 +1,7 @@
 import socket
 import re
-from proactive.models import SimilarDomain # Django
+from proactive.models import SimilarDomain  # Django
+
 
 class ServerCluster:
     def __init__(self):
@@ -79,11 +80,11 @@ class ServerCluster:
 
 class WhoisResultParser:
     def parse_results(self, whois_answer: str, similar_domain: SimilarDomain) -> bool:
-        # Mostramos la respuesta 
+        # Mostramos la respuesta
         # print("======================= RESPONSE ========================")
         # print(whois_answer)
         # print("=========================================================")
-            
+
         # Utiliza expresiones regulares para extraer fechas de la información WHOIS
         results = {}
         patterns = {
@@ -104,6 +105,7 @@ class WhoisResultParser:
             return False
         return True
 
+
 class WhoisAnalyser:
     def __init__(self):
         self.server_cluster = ServerCluster()
@@ -118,7 +120,6 @@ class WhoisAnalyser:
             response = self.__request_whois_servers(server, similar_domain_name)
             # Hacemos el análisis de la respuesta
             return response
-            
 
         # Si ningún servidor WHOIS devuelve una respuesta válida
         self.server_cluster.mostrar_alerta()

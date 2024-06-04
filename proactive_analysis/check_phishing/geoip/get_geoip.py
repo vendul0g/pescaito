@@ -1,7 +1,7 @@
 import socket
 import requests
 
-ENDPOINT = "http://ip-api.com/json"
+ENDPOINT = "http://ip-api.com/json/"
 PARAMS = "?fields=country"
 
 class GeoIP:
@@ -18,6 +18,7 @@ class GeoIP:
     
     def __get_country(self, ip: str) -> str:
         # Definimos la URL para la petición
+        # url = f"http://ip-api.com/json/{ip}?fields=country"
         url = f"{ENDPOINT}{ip}{PARAMS}"
         # Realizamos la petición
         try:
@@ -25,10 +26,12 @@ class GeoIP:
             response.raise_for_status()  # Controlamos los errores
             # Obtenemos el JSON
             data = response.json()
+            # print(f"[*] ip-api response: {data}")
+            print(f"[*] IP: {ip} - Country: {data.get('country', 'Country not found')}")
             # Devolvemos el país
             return data.get('country', 'Country not found')
         except requests.RequestException as e:
-            return f"Error retrieving geolocation: {str(e)}"
+            return f"Error retrieving geolocation from ip-api: {str(e)}"
         
     def __resolve(self, domain: str) -> list:
         # Obtenemos las IPs asociadas al dominio

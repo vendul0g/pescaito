@@ -49,7 +49,9 @@ class SimilarDomainAnalyser:
 
         # Obtenemos los países asociados a las IPs del dominio similar
         countries = GEOIP.get_domain_country(similar_domain.name)
+        # print(f"[+] Countries: {countries}")
         similar_domain.ip_countries = countries
+        # print(f"[+] IP Countries: {similar_domain.ip_countries}")
 
     def tls(self, similar_domain: SimilarDomain):
         """
