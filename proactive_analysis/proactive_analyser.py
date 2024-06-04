@@ -26,14 +26,18 @@ class ProactiveAnalyser:
             if is_phishing:
                 # Alertamos
                 print(f"[!] {sm.name} es phishing")
-                REPORTER.report(sm)
+                # REPORTER.report(sm)
+            # next_analysis_data -> mañana
+            sm.next_analysis_date = timezone.now() + timezone.timedelta(days=1)
+            # Guardamos el resultado
+            sm.save()
 
 
         # 4. Devolver los resultados
         # Creamos una respuesta
         file_content = f"{domain.name} - Dominio original\n{'='*70}\n\n"
         for r in similar_domains:
-            file_content += f"{r}\n\n"
+            file_content += f"{r.get_str_content()}\n\n"
 
         # Escribimos la respuesta en un fichero
         original_domain_name = domain.name

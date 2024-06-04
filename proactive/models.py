@@ -52,6 +52,8 @@ class SimilarDomain(models.Model):
     tld_country = models.CharField(
         max_length=32,
         verbose_name="Pais asociado al TLD",
+        blank=True,
+        null=True,
     )
 
     # Países asociados a las IPs del dominio
@@ -215,7 +217,7 @@ Results:
     def __get_verbose_name(self, field):
         return self._meta.get_field(field).verbose_name
 
-    def __str__(self):
+    def get_str_content(self):
         label_width = 45  # Ancho de la etiqueta
         return (
             f"{self.__get_verbose_name('name'):{label_width}}{self.name}\n"
@@ -248,6 +250,9 @@ Results:
             f"{self.__get_verbose_name('total_weight'):{label_width}}{self.total_weight}\n"
             f"{self.__get_verbose_name('is_phishing'):{label_width}}{self.is_phishing}\n"
         )
+
+    def __str__(self):
+        return self.name
 
     def __eq__(self, other):
         if isinstance(other, SimilarDomain):

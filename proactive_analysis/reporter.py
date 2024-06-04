@@ -35,7 +35,7 @@ class Reporter:
         Función para reportar los resultados del análisis proactivo a organizaciones
         anti-phishing
         """
-        print(f"[*] Reporter enviando email de reporte a {settings.ADMIN_EMAIL}")
+        print(f"[*] Reporter enviando email de reporte a: {settings.ADMIN_EMAIL, similar_domain.original_domain.admin_email}")
 
         subject = f"[!] Sistema Proactivo: reporte dominio similar ({similar_domain.name})"
         email_from = settings.EMAIL_HOST_USER
