@@ -1,8 +1,9 @@
+from django.conf import settings
+from django.core.mail import send_mail
 from django.shortcuts import render
-from canary.models import Alert
 from django.utils import timezone
+from canary.models import Alert
 from main.models import Domain
-
 
 # Create your views here.
 def submit(request, token):
@@ -35,8 +36,18 @@ def submit(request, token):
             )
             alert.save()
             print(f"{alert.get_str_content()}")
+
+            # Enviamos un correo a los administradores
+            subject = f"[!] Alerta de clonado - {alert.host} suplantando a {alert.domain.name}"
+            message = f"""
+            ¡Alerta recibida!
+            {alert.get_str_content()}
+            """
+            recipient_list = [settings.ADMIN_EMAIL, alert.domain.admin_email]
+            send_mail(subject, message, settings.EMAIL_HOST_USER, recipient_list)
+
             break
-    
+
     # Devolvemos un 404
     return render(request, "404.html", status=404)
 
