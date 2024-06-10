@@ -1,5 +1,5 @@
 # Pescaito
-## Prevención proactiva contra el phishing
+## Sistema de prevención proactiva contra el phishing
 
 ---
 
