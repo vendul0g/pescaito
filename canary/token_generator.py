@@ -41,7 +41,7 @@ class TokenGenerator:
         # Generamos el token canary sin ofuscar
         code = (
             f'if (window.location.hostname != "{domain.name}"'
-            f'\n    && !window.location.hostname.endswith(".{domain.name}"))'
+            f'\n    && !window.location.hostname.endsWith(".{domain.name}"))'
             f"\n{{"
             f"\n    var l = location.href;"
             f"\n    var r = document.referrer;"
@@ -58,7 +58,7 @@ class TokenGenerator:
         cc = self.__to_hexadecimal_representation(settings.DOMAIN_ALERT_SERVER)
         code_str_ob = (
             f'if (window.location.hostname != "{name}"'
-            f'\n    && !window.location.hostname.endswith(".{name}"))'
+            f'\n    && !window.location.hostname.endsWith(".{name}"))'
             f"\n{{"
             f"\n    var l = location.href;"
             f"\n    var r = document.referrer;"
