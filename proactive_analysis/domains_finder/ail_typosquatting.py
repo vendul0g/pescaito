@@ -11,6 +11,9 @@ class AilTyposquatting:
         """
         Generamos dominios similares al dominio dado y comprobamos si existen
         """
+        print("[*] Comenzando búsqueda con Ail-Typosquatting...", end='\t')
+
+        # Ejecutamos Ail-Typosquatting
         all_domains = runAll(
             domain=domain.name,
             limit=math.inf,
@@ -20,7 +23,7 @@ class AilTyposquatting:
             givevariations=True,
             keeporiginal=False,
         )
-
+        print(" OK")
         # dnsResolving(all_domains, domain.name) TODO ver si esto funciona
         return self.__check_domains_exists(all_domains, domain)
 

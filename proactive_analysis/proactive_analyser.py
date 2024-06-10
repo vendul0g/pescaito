@@ -12,11 +12,14 @@ class ProactiveAnalyser:
         """
         Función para realizar un análisis proactivo de un dominio
         """
-        print(f"{'='*50}\n[*] Analizando dominio {domain} de forma proactiva\n{'='*50}")
+        print(f"{'='*60}\n[*] Analizando dominio {domain} de forma proactiva\n{'='*60}")
         # Aquí es donde se desarrolla el análisis de cada dominio
+        
         # 1. Encontrar los dominios8 parecidos
-        similar_domains = [] #DOMAIN_FINDER.find(domain) # TODO No limitar las búsquedas
+        # similar_domains = DOMAIN_FINDER.find(domain)
+        similar_domains = []
         similar_domains.append(SimilarDomain(name='iegitec.com', original_domain=domain, found_date=timezone.now()))# TODO borrar
+        
         # 2. Analizar cada dominio parecido y comprobar si es phishing
         for sm in sorted(similar_domains):
             # Análisis

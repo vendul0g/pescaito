@@ -8,16 +8,18 @@ class DNSTwist:
         """
         Función para buscar dominios similares a uno dado con DNSTwist
         """
+        print("[*] Comenzando búsqueda con DNSTwist...", end='\t')
         # Execute DNSTwist
         domains = dnstwist.run(
             domain=domain.name,
             format="json",
             registered=True,
-            # fuzzers="bitsquatting,homoglyph,hyphenation,omission,repetition,replacement,transposition,various,vowel-swap",
-            fuzzers="vowel-swap",
+            fuzzers="bitsquatting,homoglyph,hyphenation,omission,repetition,replacement,transposition,various,vowel-swap",
+            # fuzzers="vowel-swap",
             output="/dev/null",
             threads=20,
         )
+        print(" OK")
         return self.__parse_results(domains, domain)
 
     def __parse_results(self, dnstwist_result: str, original_domain: Domain) -> list[SimilarDomain]:

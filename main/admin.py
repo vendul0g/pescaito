@@ -23,7 +23,7 @@ class DomainInline(admin.TabularInline):
 
     extra = 1
     show_change_link = True
-    readonly_fields = ("created",)
+    readonly_fields = ("created","token", "canary_token")
 
 
 class JSONURLField(forms.CharField):
@@ -91,6 +91,20 @@ class ProjectAdmin(admin.ModelAdmin):
     readonly_fields = ("created",)
 
     inlines = (DomainInline,)
+
+    def save_formset(self, request, form, formset, change):
+        if formset.model != Domain:
+            super().save_formset(request, form, formset, change)
+            return
+        
+        instances = formset.save(commit=False)
+        for instance in instances:
+            if not instance.token:  # Check if token is already set
+                instance.token = hashlib.sha256(instance.name.encode()).hexdigest()
+            instance.save()
+            instance.generate_canary_token()  
+
+        formset.save_m2m()
 
 
 @admin.action(description="Analizar dominios")

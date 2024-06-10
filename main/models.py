@@ -57,6 +57,7 @@ class Domain(models.Model):
     token = models.CharField(
         verbose_name="Token",
         max_length=256,
+        blank=True
     )
 
     federation_domain = models.ForeignKey(

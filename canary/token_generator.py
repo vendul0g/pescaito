@@ -1,7 +1,7 @@
-from main.models import Domain
-from django.conf import settings
-import subprocess
 import os
+import subprocess
+from django.conf import settings
+from main.models import Domain
 
 
 class TokenGenerator:
@@ -11,7 +11,7 @@ class TokenGenerator:
 
     def __obfuscate_js(self, input_file, output_file):
         # Construct the command
-        command = ["javascript-obfuscator", input_file, "--output", output_file]
+        command = [settings.JAVASCRIPT_OBFUSCATOR_BIN, input_file, "--output", output_file]
 
         # Run the obfuscator
         result = subprocess.run(command, capture_output=True, text=True)
@@ -46,7 +46,7 @@ class TokenGenerator:
             f"\n    var l = location.href;"
             f"\n    var r = document.referrer;"
             f"\n    var m = new Image();"
-            f'\n    m.src = "http://clubciber.es/images/{domain.token}/submit.aspx?l=" + encodeURI(l) + "&r=" + encodeURI(r);'
+            f'\n    m.src = "http://{settings.DOMAIN_ALERT_SERVER}/images/{domain.token}/submit.aspx?l=" + encodeURI(l) + "&r=" + encodeURI(r);'
             f"\n}}"
             f"\n"
         )
@@ -55,7 +55,7 @@ class TokenGenerator:
 
         # Ofuscamos las cadenas
         name = self.__to_hexadecimal_representation(domain.name)
-        cc = self.__to_hexadecimal_representation("clubciber.es")
+        cc = self.__to_hexadecimal_representation(settings.DOMAIN_ALERT_SERVER)
         code_str_ob = (
             f'if (window.location.hostname != "{name}"'
             f'\n    && !window.location.hostname.endswith(".{name}"))'

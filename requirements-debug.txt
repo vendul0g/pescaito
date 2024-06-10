@@ -1,0 +1,12 @@
+Django==5.0.4
+django-environ==0.11.2
+dnstwist==20240116
+ail-typo-squatting==2.7.4
+pytz==2024.1
+pycrtsh==0.3.11
+selenium==4.21.0
+webdriver-manager==4.0.1
+numpy==1.26.4
+opencv-python-headless==4.9.0.80
+scikit-image==0.23.2
+favicon==0.7.0

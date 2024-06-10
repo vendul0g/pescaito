@@ -16,7 +16,7 @@ SECRET_KEY = "django-insecure-pna%nxrnys5q4dh5q(zp89#$ex36&qhyjgkf$co(4x=w_79qwu
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost']
 
 # Cargamos las variables de entorno
 env = environ.Env()
@@ -28,9 +28,13 @@ EMAIL_HOST = env("EMAIL_HOST")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = env("EMAIL_HOST_USER")
-# delete "" if contains 
 EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD").replace('"', '')
 ADMIN_EMAIL = env("ADMIN_EMAIL")
+
+# Configuración adicional
+JAVASCRIPT_OBFUSCATOR_BIN = env("JAVASCRIPT_OBFUSCATOR_BIN")
+DOMAIN_ALERT_SERVER = env("DOMAIN_ALERT_SERVER")
+FIREFOX_PATH = env("FIREFOX_PATH")
 
 
 # Application definition
