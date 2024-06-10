@@ -1,6 +1,8 @@
 # Pescaito
 ## Sistema de prevención proactiva contra el phishing
 
+![Logo](./_figuras/logo.png)
+
 ---
 
 # Introducción al trabajo realizado
