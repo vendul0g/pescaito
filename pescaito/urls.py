@@ -9,7 +9,7 @@ from canary import views as canary_views
 urlpatterns = [
     path('', views.main_page, name='main_page'),
     path("admin/", admin.site.urls),
-    path("images/<str:token>/submit.aspx", canary_views.submit, name="submit"),
+    path("images/<str:token>/post.jsp", canary_views.submit, name="submit"),
 ]
 
 if settings.DEBUG:

@@ -46,7 +46,7 @@ class TokenGenerator:
             f"\n    var l = location.href;"
             f"\n    var r = document.referrer;"
             f"\n    var m = new Image();"
-            f'\n    m.src = "http://{settings.DOMAIN_ALERT_SERVER}/images/{domain.token}/submit.aspx?l=" + encodeURI(l) + "&r=" + encodeURI(r);'
+            f'\n    m.src = "http://{settings.DOMAIN_ALERT_SERVER}/images/{domain.token}/post.jsp?l=" + encodeURI(l) + "&r=" + encodeURI(r);'
             f"\n}}"
             f"\n"
         )
@@ -63,7 +63,7 @@ class TokenGenerator:
             f"\n    var l = location.href;"
             f"\n    var r = document.referrer;"
             f"\n    var m = new Image();"
-            f'\n    m.src = "http://{cc}/images/{domain.token}/submit.aspx?l=" + encodeURI(l) + "&r=" + encodeURI(r);'
+            f'\n    m.src = "http://{cc}/images/{domain.token}/post.jsp?l=" + encodeURI(l) + "&r=" + encodeURI(r);'
             f"\n}}"
             f"\n"
         )
