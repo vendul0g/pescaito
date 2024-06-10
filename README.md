@@ -35,7 +35,7 @@ Tabla 1.  Comparación de características entre diferentes herramientas de dete
 Para hacernos una idea de los análisis realizados por la herramienta, podemos observar la Figura 2, en la que se muestran cuáles son los módulos de esta herramient y cómo se lleva a cabo el modelo de procesamiento general:
 1. _DomainFinder_. Es el encargado de dado el dominio original, realizar numerosas permutaciones sobre el nombre resultando en una lista de posibles dominios maliciosos. 
 2. _SimilarDomainAnalyser_. Se encarga de, dado un dominio similar, analizarlo y tomar evidencias de los parámetros estudiados en el estado del arte.
-3. _Reporter_. Con las evidencias del dominio similar recogidas, se encarga de evaluarlas y determinar si dicho dominio se trata o no de phishing.
+3. _Reporter_. Con las evidencias del dominio similar recogidas, se encarga de evaluarlas y determinar si dicho dominio se trata o no de phishing. Para evaluar dichas evidencias se utilizan los parámetros recogidos a lo largo de todo el análisis del dominio similar, que podemos ver en la Figura 4
 
 
 ![Diagrama](./_figuras/modelo_procesamiento_proactivo.png)
@@ -47,15 +47,18 @@ Vemos en la Figura 3 un diagrama de interacción del sistema, que nos muestra cu
 ![Diagrama](./_figuras/diagrama_interaccion_proactivo.png)
 Figura 3. Diagrama de interacción del sistema de análisis proactivo
 
+![Tabla](./_figuras/tabla_parametros_reporter.png)
+Figura 4. Aspectos evaluados para la detección del phishing
+
 
 ## Módulo Preventivo
 
 En el aspecto preventivo, "Pescaito" genera y administra canary tokens. Estos tokens son embebidos de forma discreta en las páginas web de las organizaciones protegidas. Funcionan como señuelos que, al ser accedidos desde un dominio clonado, alertan inmediatamente a los administradores. Esta funcionalidad permite una respuesta rápida ante la clonación de sitios, un método comúnmente utilizado en los ataques de phishing.
 
-Vemos en la Figura 4 un diagrama de interacción del sistema preventivo, en el que se puede observar cuál es el proceso de interacción con el sistema a la hora de generar los _canary tokens_, y también cómo el administrador de la organización los incluye en sus páginas web. Además, vemos cómo ocurre la clonación de la página web por parte del atacante, y cómo el canario alerta al servidor del sistema.
+Vemos en la Figura 5 un diagrama de interacción del sistema preventivo, en el que se puede observar cuál es el proceso de interacción con el sistema a la hora de generar los _canary tokens_, y también cómo el administrador de la organización los incluye en sus páginas web. Además, vemos cómo ocurre la clonación de la página web por parte del atacante, y cómo el canario alerta al servidor del sistema.
 
-[Diagrama](./_figuras/diagrama_interaccion_preventivo.png)
-Figura 4. Diagrama de interacción del sistema preventivo
+![Diagrama](./_figuras/diagrama_interaccion_preventivo.png)
+Figura 5. Diagrama de interacción del sistema preventivo
 
 ## Validación y Pruebas
 
