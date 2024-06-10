@@ -86,6 +86,124 @@ Estas mejoras y expansiones propuestas no solo fortalecerán la herramienta, sin
 ---
 # USAGE
 
+> ***NOTA***
+>  La guía está realizada para dispositivos Debian.
+
+## Instalación del entorno
+
+Primero de todo, debemos tener instalado `python`
+```
+sudo apt install python3
+```
+
+Ahora instalamos el entorno para tener el proyecto de Django aislado
+```
+pip install pipenv
+```
+
+En caso de error en la ejecución anterior, también podemos utilizar la instalación con `apt` ==> `sudo apt install pipenv`.
+
+El siguiente paso es establecer la versión de Django en el nuevo proyecto. Si tu versión de python (`python --version`) es distinta a la que aparece en el `Pipfile` (`cat Pipfile | grep python_version`), puedes modificarla para que sea acorde. A continuación debes indicar la versión de python añadiendo la ruta del ejecutable. En mi caso vemos lo siguiente:
+```
+pipenv --python /usr/bin/python3
+```
+
+Ahora ya podemos entrar en el activar la shell del nuevo entorno con
+```
+pipenv shell
+```
+
+Con esto tendremos un nuevo entorno, apareciendo en paréntesis el nombre del mismo en el prompt de la consola.
+
+## Inicialización de los ficheros necesarios para ejecutar el proyecto de Django
+
+Es necesario crear un fichero `.env` en el directorio del proyecto conteniendo las siguientes variables de entorno, para poder hacer el envío de correos con `Django.core.mail`:
+```
+EMAIL_HOST=<smtp_server>
+EMAIL_HOST_USER=<email_which_send_mails>
+EMAIL_HOST_PASSWORD=<password_email>
+ADMIN_EMAIL=<administrator_email>
+```
+Donde:
+- `EMAIL_HOST`: indica la dirección del servidor SMTP que se quiere usar para enviar emails
+- `EMAIL_HOST_USER`: el correo que se usa para enviar los correos a los destinatarios
+- `EMAIL_HOST_PASSWORD`: la contraseña del correo indicado anteriormente. Si la contraseña contiene espacios, se debe poner entre comillas simples. Ejemplo: `EMAIL_HOST_PASSWORD='mi contraseña'`.
+- `ADMIN_EMAIL`: la dirección de correo del administrador, para que nos lleguen las alertas. No tiene por qué ser el mismo que `EMAIL_HOST_USER`.
+
+Es necesario crear una carpeta para que se almacenen los datos generados durante los análisis y la inicialización de los modelos
+```
+mkdir _media
+```
+
+---
+## Ofuscador de canary tokens
+
+Para poder realizar la ofuscación de los canarios, necesitaremos instalar [**`javascript-obfuscator`**](https://github.com/javascript-obfuscator/javascript-obfuscator). Y los pasos son los siguientes:
+
+1. Instalar `npm` (puede que tarde un ratito (~2 min.))
+```
+sudo apt install npm
+```
+
+2. Instalar `javascript-obfuscator`
+```
+npm install --save-dev javascript-obfuscator
+```
+
+3. Añadir al `.env` el **`path`** al binario de `javascript-obfuscator` (que se puede encontrar con `sudo find / -type f -name 'javascript-obfuscator' 2>/dev/null`).
+```
+JAVASCRIPT_OBFUSCATOR_BIN=/path/to/javascript-obfuscator
+```
+---
+## Extraer historial de certificados con crt.sh
+
+Para la instalación del paquete `pycrtsh` primero es necesario instalar lo siguiente:
+```
+sudo apt-get install libxml2-dev libxslt-dev libpq-dev python-dev-is-python3
+```
+
+## Firefox
+
+Para la instalación de firefox hacemos:
+```
+sudo apt install -y firefox libgtk-3-0 libdbus-glib-1-2 libasound2
+```
+
+Debemos configurar en el `.env` la variable `FIREFOX_PATH`, con la ruta al binario de firefox
+```
+FIREFOX_PATH=/path/to/firefox
+```
+
+> ***NOTA***:
+> La función de capturas de pantalla solo podrá hacerse en un dispositivo con pantalla. Un servidor no es compatible con esta función. Por lo menos de la manera en la que ahora está implementado. Si alguien sabe o consigue que se pueda hacer, por favor, que inicie un `issue`. Muchas gracias.
+
+---
+## Instalar dependencias
+```
+pip install -r requirements.txt
+```
+
+---
+## Ejecución de Django
+
+Para poder inicializar los modelos de Django, es necesario que hagamos lo siguiente:
+```
+python manage.py migrate
+```
+
+Ahora, creamos un usuario administrador para poder acceder a la plataforma
+```
+python manage.py createsuperuser
+```
+
+Lanzamos el servidor
+```
+python manage.py runserver
+```
+
+> ***NOTA***:
+> Si queremos que el servidor no se lance en local, sino que esté público, debemos indicarlo en la variable `ALLOWED_HOSTS` del fichero `settings.py`. Ejemplo: `ALLOWED_HOSTS = ['mydomain.com']`.
+> Entonces deberemos lanzar el servidor usando: `python manage.py runserver 0.0.0.0:8000`.
 
 
 ---
