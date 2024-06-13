@@ -22,8 +22,8 @@ class Alert(models.Model):
     )
 
     ip = models.GenericIPAddressField(
-        verbose_name="IP en la que se aloja el dominio malicioso",
-        help_text="IP en la que se aloja el dominio malicioso",
+        verbose_name="IP desde la que se lanza el canario",
+        help_text="IP desde la que se lanza el canario",
     )
 
     date = models.DateTimeField(
