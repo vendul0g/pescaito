@@ -161,15 +161,16 @@ class Reporter:
             print(f"[+] Enlaces maliciosos detectados - {weight}")
 
         # Similaridad visual
-        for r in similar_domain.visual_similarity:
-            if (
-                r["dft_web"] < THRESHOLD_DFT_VISUAL_SIMILARITY
-                or r["dct_web"] < THRESHOLD_DCT_VISUAL_SIMILARITY
-                or r["favicon"] < THRESHOLD_DCT_VISUAL_SIMILARITY
-            ):
-                weight += WEIGHT_VISUAL_SIMILARITY
-                print(f"[+] Similitud visual detectada - {weight}")
-                break
+        if similar_domain.visual_similarity:
+            for r in similar_domain.visual_similarity:
+                if (
+                    r["dft_web"] < THRESHOLD_DFT_VISUAL_SIMILARITY
+                    or r["dct_web"] < THRESHOLD_DCT_VISUAL_SIMILARITY
+                    or r["favicon"] < THRESHOLD_DCT_VISUAL_SIMILARITY
+                ):
+                    weight += WEIGHT_VISUAL_SIMILARITY
+                    print(f"[+] Similitud visual detectada - {weight}")
+                    break
 
         # PaaS
         if similar_domain.paas_tools > THRESHOLD_PAAS:

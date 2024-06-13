@@ -133,6 +133,7 @@ class SimilarDomain(models.Model):
     # Indica los RMS resultantes del análisis visual (lista de floats)
     visual_similarity = models.JSONField(
         verbose_name="Similitud visual",
+        null=True,
     )
 
     # Indica el número de hallazgos encontrados sobre herramientas PaaS

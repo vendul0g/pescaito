@@ -16,7 +16,7 @@ class DomainFinder:
     def find(self, domain: Domain) -> list[SimilarDomain]: 
         # Análisis de DNSTwist
         domains_dnstwist = DNS_TWIST.find(domain)
-        domains_ail = AIL_TYPO_SQUATTING.find(domain)
+        domains_ail = []#AIL_TYPO_SQUATTING.find(domain)
 
         # Unión de los dominios encontrados
         unique_domains = set(domains_dnstwist) | set(domains_ail)

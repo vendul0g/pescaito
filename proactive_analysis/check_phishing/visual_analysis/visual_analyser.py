@@ -4,14 +4,14 @@ from selenium import webdriver
 from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
 from webdriver_manager.firefox import GeckoDriverManager
-from django.conf import settings
 from .dft_comparator import DFT_COMPARATOR
 from .dct_comparator import DCT_COMPARATOR
 from .favicon_comparator import FAVICON_COMPARATOR
+from django.conf import settings
 
 # Constantes
 TIMEOUT = 5
-
+# FIREFOX_PATH = "/home/alvaro/Documents/firefox/firefox"
 
 class VisualAnalyser:
     """
@@ -26,10 +26,12 @@ class VisualAnalyser:
         """
         options = Options()
         options.headless = True
+        options.binary_location = settings.FIREFOX_PATH
         driver = webdriver.Firefox(
             service=Service(GeckoDriverManager().install()), options=options
         )
         driver.get(url)
+        # Add a delay to allow the page to fully load
         time.sleep(TIMEOUT)
         driver.save_screenshot(file_name)
         driver.quit()
@@ -45,7 +47,7 @@ class VisualAnalyser:
         # Comprobamos errores
         if not favicon1 or not favicon2:
             return 0
-
+        
         print(f"[*] Favicons: {favicon1} and {favicon2}")
 
         # Inicializamos la ruta de almacenamiento de los ficheros
@@ -64,7 +66,7 @@ class VisualAnalyser:
             self.__take_screenshot(favicon1, file1)
         if not os.path.exists(file2):
             self.__take_screenshot(favicon2, file2)
-
+        
         # Comparamos los favicons
         r = FAVICON_COMPARATOR.compare_favicons(file1, file2)
 
@@ -96,7 +98,7 @@ class VisualAnalyser:
         # 1. DFT
         r1 = DFT_COMPARATOR.compare_images(file1, file2)
 
-        # 2. DCT
+        # 2. DCT 
         r2 = DCT_COMPARATOR.compare_images(file1, file2)
 
         return r1, r2

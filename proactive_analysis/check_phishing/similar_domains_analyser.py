@@ -154,6 +154,7 @@ class SimilarDomainAnalyser:
 
         # 6. Comprobamos el contenido HTML de la página
         stop = self.html(similar_domain)
+        print("[+] Stop: ", stop)
         if stop:
             return
         

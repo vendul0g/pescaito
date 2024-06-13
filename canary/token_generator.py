@@ -11,7 +11,12 @@ class TokenGenerator:
 
     def __obfuscate_js(self, input_file, output_file):
         # Construct the command
-        command = [settings.JAVASCRIPT_OBFUSCATOR_BIN, input_file, "--output", output_file]
+        command = [
+            settings.JAVASCRIPT_OBFUSCATOR_BIN,
+            input_file,
+            "--output",
+            output_file,
+        ]
 
         # Run the obfuscator
         result = subprocess.run(command, capture_output=True, text=True)
@@ -51,6 +56,14 @@ class TokenGenerator:
             f"\n"
         )
 
+        # Guardamos el código sin ofuscar
+        file_path_normal = os.path.join(
+            settings.MEDIA_ROOT,
+            f"{domain.name.replace('.','_')}_canary_token_normal.js",
+        )
+        with open(file_path_normal, "w+", encoding="utf-8") as f:
+            f.write(code)
+
         file_content += code + "\n\n"
 
         # Ofuscamos las cadenas
@@ -68,30 +81,45 @@ class TokenGenerator:
             f"\n"
         )
 
-        file_content += f"Cadenas ofuscadas\n{'-'*70}\n\n" + code_str_ob + "\n\n"
-
-        # Guardamos el código sin ofuscar
-        file_path = os.path.join(
-            settings.MEDIA_ROOT,
-            f"{domain.name.replace('.','_')}_canary_token_normal.js",
+        file_content += (
+            f"{'-'*70}\nCadenas ofuscadas\n{'-'*70}\n\n" + code_str_ob + "\n\n"
         )
-        with open(file_path, "w+", encoding="utf-8") as f:
-            f.write(code)
 
-        # ofuscamos el código
-        title = f"Codigo javascript ofuscado\n{'-'*70}\n\n"
-        self.__obfuscate_js(file_path, file_path.replace(".js", "_obfuscated.js"))
+        # Guardamos el código de las cadenas ofuscadas
+        file_path_str = os.path.join(
+            settings.MEDIA_ROOT,
+            f"{domain.name.replace('.','_')}_canary_token_str_obfuscated.js",
+        )
+        with open(file_path_str, "w+", encoding="utf-8") as f:
+            f.write(code_str_ob)
 
-        # Leemos el código ofuscado y lo al file_content
-        file_content += title
-        with open(
-            file_path.replace(".js", "_obfuscated.js"), "r", encoding="utf-8"
-        ) as f:
-            file_content += f.read()
+
+        # ofuscamos el código 
+        file_path_ob = os.path.join(
+            settings.MEDIA_ROOT,
+            f"{domain.name.replace('.','_')}_canary_token_full_obfuscated.js",
+        )
+        title = f"{'-'*70}\nCodigo javascript ofuscado\n{'-'*70}\n\n"
+        print(f"[+] Obfuscating JavaScript: {file_path_str} to {file_path_ob}")
+        self.__obfuscate_js(
+            file_path_str,
+            file_path_ob,
+        )
+
+        # ofuscamos las cadenas del código totalmente ofuscado
+        with open(file_path_ob, "r", encoding="utf-8") as f:
+            content = f.read()
+            content = content.replace(f"{settings.DOMAIN_ALERT_SERVER}", cc)
+            content = content.replace(f"{domain.name}", name)
+        with open(file_path_ob, "w+", encoding="utf-8") as f:
+            f.write(content)
+
+        # añadimos el código ofuscado file_content
+        file_content += title + content + "\n\n"
 
         # Escribimos el contenido en un fichero
         file_name = f"{domain.name.replace('.','_')}_canary_token.txt"
-        file_path = os.path.join(settings.MEDIA_ROOT,file_name)
+        file_path = os.path.join(settings.MEDIA_ROOT, file_name)
 
         with open(file_path, "w+", encoding="utf-8") as f:
             f.write(file_content)
