@@ -1,281 +1,278 @@
 # Pescaito
-## Sistema de prevención proactiva contra el phishing
+## Proactive Phishing Protection System 
 
 ![Logo](./_figuras/logo.png)
 
 ---
 
-# Introducción al trabajo realizado
+# Introduction to the Work Performed
 
-El phishing representa uno de los desafíos más persistentes y evolutivos en el ámbito de la seguridad cibernética. A través de la ingeniería social, los atacantes engañan a las víctimas para extraer información personal crucial, como datos financieros y credenciales de acceso. El informe del Anti-Phishing Working Group (APWG) para el año 2023 ilustra un incremento alarmante en la frecuencia de estos ataques, posicionando dicho año como el peor registrado en la historia del phishing, con casi cinco millones de ataques phishing registrados (como se ve en la Figura 1). Este problema afecta de manera desproporcionada a las pequeñas y medianas empresas (PYMEs), que a menudo carecen de los recursos para implementar soluciones de seguridad efectivas.
+Phishing represents one of the most persistent and evolving challenges in the realm of cybersecurity. Through social engineering, attackers deceive victims to extract crucial personal information, such as financial data and access credentials. The Anti-Phishing Working Group (APWG) report for the year 2023 illustrates an alarming increase in the frequency of these attacks, positioning that year as the worst recorded in phishing history, with nearly five million phishing attacks registered (as seen in Figure 1). This problem disproportionately affects small and medium-sized enterprises (SMEs), which often lack the resources to implement effective security solutions.
 
+![Graph](./_figuras/grafica_apwg_phishing_eng.png)
+Figure 1. Number of phishing attacks by impersonation registered by APWG between 2014 and 2023.
 
-![Gráfica](./_figuras/grafica_apwg_phishing.png)
-Figura 1. Número de ataques phishing por impersonación registradas por el APWG entre 2014 y 2023.
+In this scenario, the "Pescaito" project emerges as an open-source solution aimed at providing proactive and preventive defense against phishing attacks. This tool is designed to go beyond typical reactive responses, anticipating potential threats before they affect users. Being hosted on GitHub, "Pescaito" offers complete transparency and facilitates ongoing collaboration for its improvement.
 
-Frente a este escenario, el proyecto "Pescaito" se erige como una solución de código abierto orientada a ofrecer una defensa proactiva y preventiva contra los ataques de phishing. Esta herramienta está diseñada para ir más allá de las respuestas reactivas típicas, anticipando posibles amenazas antes de que estas lleguen a afectar a los usuarios. Al estar alojada en GitHub, "Pescaito" ofrece transparencia total y facilita la colaboración continua para su mejora.
+## State of the Art
 
-## Estado del arte
+In the field of cybersecurity, the state of the art in combating phishing has significantly evolved in response to the increasingly sophisticated techniques employed by cybercriminals. Traditionally, anti-phishing solutions have focused on reactive methods that identify and respond to attacks after they have occurred. These solutions include URL verification and webpage content analysis through blacklists, which are often updated after an attack is detected. However, the effectiveness of these methods has diminished as attackers have improved in creating websites and emails that convincingly mimic legitimate entities.
 
-En el ámbito de la seguridad cibernética, el estado del arte en la lucha contra el phishing ha evolucionado significativamente en respuesta a las técnicas cada vez más sofisticadas empleadas por los ciberdelincuentes. Tradicionalmente, las soluciones anti-phishing se han centrado en métodos reactivos que identifican y responden a los ataques después de que han ocurrido. Estas soluciones incluyen la verificación de URLs y el análisis de contenido de páginas web mediante listas negras, que a menudo se actualizan tras la detección de un ataque. Sin embargo, la efectividad de estos métodos ha disminuido a medida que los atacantes han mejorado en la creación de sitios web y correos electrónicos que imitan de manera convincente a entidades legítimas.
+Facing this challenge, recent research has begun to lean towards proactive and preventive strategies. These strategies aim to identify and mitigate risks before attacks affect users. Emerging techniques include heuristic analysis and machine learning to detect anomalies in web domain behavior, as well as the implementation of canary tokens and other digital markers to warn against website cloning. Additionally, there has been an increase in the use of sandboxing techniques that allow the execution and analysis of suspicious content in a controlled environment.
 
-Ante este desafío, la investigación reciente ha comenzado a inclinarse hacia estrategias proactivas y preventivas. Estas estrategias buscan identificar y mitigar los riesgos antes de que los ataques afecten a los usuarios. Entre las técnicas emergentes se encuentran el análisis heurístico y el aprendizaje automático para detectar anomalías en el comportamiento de los dominios web, así como la implementación de tokens canarios y otros marcadores digitales para advertir sobre la clonación de sitios web. Además, se ha visto un incremento en la utilización de técnicas de sandboxing que permiten la ejecución y análisis de contenido sospechoso en un entorno controlado.
+Furthermore, collaboration between financial institutions, technology companies, and public security agencies has resulted in the creation of shared databases and joint cyber intelligence operations, expanding the network for rapid detection and response to phishing incidents. Although these advancements represent significant progress, the fight against phishing remains an arms race in which both defenders and attackers continuously adapt and refine their tactics.
 
-Adicionalmente, la colaboración entre instituciones financieras, empresas tecnológicas y organismos de seguridad pública ha resultado en la creación de bases de datos compartidas y operaciones de ciberinteligencia conjuntas, ampliando la red de detección y respuesta rápida ante incidentes de phishing. Aunque estos avances representan un progreso significativo, la lucha contra el phishing sigue siendo una carrera armamentística en la que tanto defensores como atacantes continuamente adaptan y refinan sus tácticas.
+The study conducted is based on consulted scientific articles, which serve as the foundation for developing the tool, culminating in Table 1, which shows the solutions addressed by the literature compared to those of this tool.
 
-El estudio realizado se basa en artículos científicos consultados, y que se ponen de base para desarrollar la herramienta, concluyendo en la Tabla 1, que muestra cuáles son las soluciones abordadas por la literatura en comparación con la de esta herramienta
+![Table](./_figuras/tabla_comparativa_sota_eng.png)
+Table 1. Comparison of features between different phishing detection tools, including "Pescaito," such as "TFG."
 
-![Tabla](./_figuras/tabla_comparativa_sota.png)
-Tabla 1.  Comparación de características entre diferentes herramientas de detección de phishing, incluida "Pescaito", como "TFG"
+> We can see in the [bibliography](# Bibliography) the entries represented in the table.
 
-> Vemos en la [bibliografía](# Bibliografía) las entradas representadas en la tabla
+## Proactive Detection
 
-## Detección Proactiva
+"Pescaito" incorporates a system that actively identifies suspicious domains that could be used to impersonate a legitimate entity. This analysis is carried out through periodic domain reviews, where the source code, visual content, and HTTP requests are evaluated. If a domain is confirmed to be related to phishing activities, these findings are reported to entities such as APWG and Microsoft, thus contributing to the global effort against phishing.
 
-"Pescaito" incorpora un sistema que identifica de forma activa los dominios sospechosos que podrían ser utilizados para imitar a una entidad legítima. Este análisis se realiza mediante la revisión periódica de los dominios, donde se evalúa el código fuente, el contenido visual y las peticiones HTTP. En caso de confirmarse que un dominio está relacionado con actividades de phishing, se procede a reportar estos hallazgos a entidades como el APWG y Microsoft, contribuyendo así al esfuerzo global contra el phishing. 
+To get an idea of the analyses performed by the tool, we can observe Figure 2, which shows the modules of this tool and how the overall processing model is carried out:
+1. **_DomainFinder_**: Responsible for performing numerous permutations on the original domain name, resulting in a list of possible malicious domains.
+2. **_SimilarDomainAnalyser_**: Responsible for analyzing a similar domain and gathering evidence based on the parameters studied in the state of the art.
+3. **_Reporter_**: With the evidence collected from the similar domain, it evaluates them and determines whether the domain is phishing or not. To evaluate this evidence, the parameters collected throughout the analysis of the similar domain are used, as shown in Figure 4.
 
-Para hacernos una idea de los análisis realizados por la herramienta, podemos observar la Figura 2, en la que se muestran cuáles son los módulos de esta herramient y cómo se lleva a cabo el modelo de procesamiento general:
-1. _DomainFinder_. Es el encargado de dado el dominio original, realizar numerosas permutaciones sobre el nombre resultando en una lista de posibles dominios maliciosos. 
-2. _SimilarDomainAnalyser_. Se encarga de, dado un dominio similar, analizarlo y tomar evidencias de los parámetros estudiados en el estado del arte.
-3. _Reporter_. Con las evidencias del dominio similar recogidas, se encarga de evaluarlas y determinar si dicho dominio se trata o no de phishing. Para evaluar dichas evidencias se utilizan los parámetros recogidos a lo largo de todo el análisis del dominio similar, que podemos ver en la Figura 4
+![Diagram](./_figuras/modelo_procesamiento_proactivo_eng.png)
+Figure 2. Processing model of the proactive analyzer.
 
+Figure 3 shows a system interaction diagram, illustrating how the user interacts with the system, how it conducts analyses, and in case of phishing, reports.
 
-![Diagrama](./_figuras/modelo_procesamiento_proactivo.png)
-Figura 2. Modelo de procesamiento del analizador proactivo
+![Diagram](./_figuras/diagrama_interaccion_proactivo_eng.png)
+Figure 3. Interaction diagram of the proactive analysis system.
 
-Vemos en la Figura 3 un diagrama de interacción del sistema, que nos muestra cuál es la manera en la que el usuario interactúa con el sistema, cómo éste hace análisis y en caso de phishing, reportes.
+![Table](./_figuras/tabla_parametros_reporter_eng.png)
+Figure 4. Aspects evaluated for phishing detection.
 
+## Preventive Module
 
-![Diagrama](./_figuras/diagrama_interaccion_proactivo.png)
-Figura 3. Diagrama de interacción del sistema de análisis proactivo
+On the preventive side, "Pescaito" generates and manages canary tokens. These tokens are discreetly embedded in the web pages of protected organizations. They function as bait that, when accessed from a cloned domain, immediately alert administrators. This functionality allows for a rapid response to website cloning, a common method used in phishing attacks.
 
-![Tabla](./_figuras/tabla_parametros_reporter.png)
-Figura 4. Aspectos evaluados para la detección del phishing
+Figure 5 shows an interaction diagram of the preventive system, where you can observe the process of interacting with the system when generating canary tokens and how the organization's administrator includes them in their web pages. Additionally, it shows how the attacker clones the web page and how the canary alerts the system server.
 
+![Diagram](./_figuras/diagrama_interaccion_preventivo_eng.png)
+Figure 5. Interaction diagram of the preventive system.
 
-## Módulo Preventivo
+## Validation and Testing
 
-En el aspecto preventivo, "Pescaito" genera y administra canary tokens. Estos tokens son embebidos de forma discreta en las páginas web de las organizaciones protegidas. Funcionan como señuelos que, al ser accedidos desde un dominio clonado, alertan inmediatamente a los administradores. Esta funcionalidad permite una respuesta rápida ante la clonación de sitios, un método comúnmente utilizado en los ataques de phishing.
+The effectiveness of "Pescaito" has been validated through a collaboration with Legitec Ciberseguridad S.L., where a proof of concept was conducted with a malicious domain. This test confirmed the tool's ability to detect and act against phishing attempts from the outset, demonstrating its potential as a proactive anti-phishing solution.
 
-Vemos en la Figura 5 un diagrama de interacción del sistema preventivo, en el que se puede observar cuál es el proceso de interacción con el sistema a la hora de generar los _canary tokens_, y también cómo el administrador de la organización los incluye en sus páginas web. Además, vemos cómo ocurre la clonación de la página web por parte del atacante, y cómo el canario alerta al servidor del sistema.
+> (For confidentiality reasons, this test cannot be shown in this public repository.)
 
-![Diagrama](./_figuras/diagrama_interaccion_preventivo.png)
-Figura 5. Diagrama de interacción del sistema preventivo
+## Future Improvement Paths
 
-## Validación y Pruebas
+Although "Pescaito" has proven to be a promising tool, it is still under development, and several improvement paths could be explored to enhance its effectiveness:
 
-La eficacia de "Pescaito" ha sido validada a través de una colaboración con Legitec Ciberseguridad S.L., donde se realizó una prueba de concepto con un dominio malicioso. Esta prueba confirmó la capacidad de la herramienta para detectar y actuar contra intentos de phishing desde su inicio, demostrando su potencial como solución anti-phishing proactiva.
+1. **Integration of Proactive and Preventive Modules**: Unify both modules into a cohesive tool that optimizes both prevention and reaction to threats.
+2. **Guides for Integrating Canary Tokens**: Develop detailed guides for integrating canary tokens into various web platforms, improving ease of use and adaptability.
+3. **Self-Management of Whitelist and Blacklist**: Implement systems that allow users to manage lists of safe and dangerous sites with greater autonomy and efficiency.
+4. **Study and Evaluation of Login Forms**: Extend the analysis to login forms and other types, thereby expanding the scope of phishing detection.
+5. **Periodic Reports**: Produce regular reports that provide administrators with detailed statistics on detected threats and the overall effectiveness of the tool.
+6. **Translation to English**: Expand the tool's international accessibility by localizing it into English.
+7. **Web Portal for the Tool**: Create a dedicated web platform that enhances the user interface and functionalities of "Pescaito."
+8. **Monitoring of Already Detected Similar Domains**: Establish protocols for the continuous monitoring of previously identified domains, optimizing resources and improving surveillance.
+9. **Coordination with Google Safe Browsing**: Integrate "Pescaito" with recognized systems like Google Safe Browsing to strengthen detection and rapid response.
+10. **Study the Effectiveness of Canary Tokens Against Sophisticated Techniques**: Evaluate the resilience of canary tokens against advanced tools like Evilginx, which bypass multi-factor authentication.
 
-> (Por motivos de confidencialidad, esta prueba no puede ser mostrada en este repositorio público)
-
-## Vías de Mejora Futuras
-
-Aunque "Pescaito" ha demostrado ser una herramienta prometedora, aún está en desarrollo y existen varias vías de mejora que podrían explorarse para potenciar su efectividad:
-
-1. **Integración de Módulos Proactivo y Preventivo**: Unificar ambos módulos en una herramienta cohesiva que optimice tanto la prevención como la reacción ante amenazas.
-2. **Guías de Integración de Tokens Canary**: Desarrollar guías detalladas para la integración de canary tokens en distintas plataformas web, mejorando la facilidad de uso y la adaptabilidad.
-3. **Autogestión de Whitelist y Blacklist**: Implementar sistemas que permitan a los usuarios gestionar listas de sitios seguros y peligrosos con mayor autonomía y eficiencia.
-4. **Estudio y Evaluación de Formularios de Login**: Extender el análisis a formularios de inicio de sesión y otros tipos, ampliando así el alcance de la detección de phishing.
-5. **Informes Periódicos**: Producir informes regulares que proporcionen a los administradores estadísticas detalladas sobre las amenazas detectadas y la eficacia general de la herramienta.
-6. **Traducción al Inglés**: Ampliar la accesibilidad internacional de la herramienta mediante su localización en inglés.
-7. **Portal Web para la Herramienta**: Crear una plataforma web dedicada que mejore la interfaz de usuario y las funcionalidades de "Pescaito".
-8. **Monitoreo de Dominios Similares ya detectados**: Establecer protocolos para el seguimiento continuo de dominios previamente identificados, optimizando los recursos y mejorando la vigilancia.
-9. **Coordinación con Google Safe Browsing**: Integrar "Pescaito" con sistemas reconocidos como Google Safe Browsing para fortalecer la detección y respuesta rápida.
-10. **Estudio de la efectividad de los canary tokens ante técnicas sofisticadas**: Evaluar la resistencia de los canary tokens frente a herramientas avanzadas como Evilginx, que burlan la autenticación multifactor.
-
-Estas mejoras y expansiones propuestas no solo fortalecerán la herramienta, sino que también contribuirán a su evolución hacia una solución integral y robusta en la lucha contra el phishing.
+These proposed improvements and expansions will not only strengthen the tool but also contribute to its evolution into a comprehensive and robust solution in the fight against phishing.
 
 ---
 # USAGE
 
-> ***NOTA***
->  La guía está realizada para dispositivos Debian.
+> ***NOTE***
+> The guide is designed for Debian devices.
 
-## Instalación del entorno
+## Setting Up the Environment
 
-Primero de todo, debemos tener instalado `python`
+First of all, we must have `python` installed.
 ```
 sudo apt install python3
 ```
 
-Ahora instalamos el entorno para tener el proyecto de Django aislado
+Now, install the environment to have the Django project isolated.
 ```
 pip install pipenv
 ```
 
-En caso de error en la ejecución anterior, también podemos utilizar la instalación con `apt` ==> `sudo apt install pipenv`.
+In case of an error in the previous execution, we can also use the installation with `apt` ==> `sudo apt install pipenv`.
 
-El siguiente paso es establecer la versión de Django en el nuevo proyecto. Si tu versión de python (`python --version`) es distinta a la que aparece en el `Pipfile` (`cat Pipfile | grep python_version`), puedes modificarla para que sea acorde. A continuación debes indicar la versión de python añadiendo la ruta del ejecutable. En mi caso vemos lo siguiente:
+The next step is to set the Django version in the new project. If your Python version (`python --version`) is different from the one in the `Pipfile` (`cat Pipfile | grep python_version`), you can modify it accordingly. Next, you must specify the Python version by adding the executable path. In my case, we see the following:
 ```
 pipenv --python /usr/bin/python3
 ```
 
-Ahora ya podemos entrar en el activar la shell del nuevo entorno con
+Now we can activate the shell of the new environment with:
 ```
 pipenv shell
 ```
 
-Con esto tendremos un nuevo entorno, apareciendo en paréntesis el nombre del mismo en el prompt de la consola.
+With this, we will have a new environment, appearing in parentheses with its name in the console prompt.
 
-## Inicialización de los ficheros necesarios para ejecutar el proyecto de Django
+## Initializing the Necessary Files to Run the Django Project
 
-Es necesario crear un fichero `.env` en el directorio del proyecto conteniendo las siguientes variables de entorno, para poder hacer el envío de correos con `Django.core.mail`:
+It is necessary to create a `.env` file in the project directory containing the following environment variables to send emails with `Django.core.mail`:
 ```
 EMAIL_HOST=<smtp_server>
 EMAIL_HOST_USER=<email_which_send_mails>
 EMAIL_HOST_PASSWORD=<password_email>
 ADMIN_EMAIL=<administrator_email>
 ```
-Donde:
-- `EMAIL_HOST`: indica la dirección del servidor SMTP que se quiere usar para enviar emails
-- `EMAIL_HOST_USER`: el correo que se usa para enviar los correos a los destinatarios
-- `EMAIL_HOST_PASSWORD`: la contraseña del correo indicado anteriormente. Si la contraseña contiene espacios, se debe poner entre comillas simples. Ejemplo: `EMAIL_HOST_PASSWORD='mi contraseña'`.
-- `ADMIN_EMAIL`: la dirección de correo del administrador, para que nos lleguen las alertas. No tiene por qué ser el mismo que `EMAIL_HOST_USER`.
+Where:
+- `EMAIL_HOST`: indicates the address of the SMTP server you want to use to send emails.
+- `EMAIL_HOST_USER`: the email used to send emails to recipients.
+- `EMAIL_HOST_PASSWORD`: the password of the email mentioned above. If the password contains spaces, it should be enclosed in single quotes. Example: `EMAIL_HOST_PASSWORD='my password'`.
+- `ADMIN_EMAIL`: the administrator's email address to receive alerts. It does not have to be the same as `EMAIL_HOST_USER`.
 
-Es necesario crear una carpeta para que se almacenen los datos generados durante los análisis y la inicialización de los modelos
+It is necessary to create a folder to store the data generated during analyses and model initialization.
 ```
 mkdir _media
 ```
 
 ---
-## Ofuscador de canary tokens
 
-Para poder realizar la ofuscación de los canarios, necesitaremos instalar [**`javascript-obfuscator`**](https://github.com/javascript-obfuscator/javascript-obfuscator). Y los pasos son los siguientes:
+## Canary Token Obfuscator
 
-1. Instalar `npm` (puede que tarde un ratito (~2 min.))
+To obfuscate the canaries, we will need to install [**`javascript-obfuscator`**](https://github.com/javascript-obfuscator/javascript-obfuscator). The steps are as follows:
+
+1. Install `npm` (it may take a while (~2 min.))
 ```
 sudo apt install npm
 ```
 
-2. Instalar `javascript-obfuscator`
+2. Install `javascript-obfuscator`
 ```
 npm install --save-dev javascript-obfuscator
 ```
 
-3. Añadir al `.env` el **`path`** al binario de `javascript-obfuscator` (que se puede encontrar con `sudo find / -type f -name 'javascript-obfuscator' 2>/dev/null`).
+3. Add the **`path`** to the `javascript-obfuscator` binary in the `.env` file (which can be found with `sudo find / -type f -name 'javascript-obfuscator' 2>/dev/null`).
 ```
 JAVASCRIPT_OBFUSCATOR_BIN=/path/to/javascript-obfuscator
 ```
 ---
-## Extraer historial de certificados con crt.sh
 
-Para la instalación del paquete `pycrtsh` primero es necesario instalar lo siguiente:
+## Extract Certificate History with crt.sh
+
+To install the `pycrtsh` package, first install the following:
 ```
 sudo apt-get install libxml2-dev libxslt-dev libpq-dev python-dev-is-python3
 ```
 
 ## Firefox
 
-Para la instalación de firefox hacemos:
+To install Firefox, execute:
 ```
 sudo apt install -y firefox libgtk-3-0 libdbus-glib-1-2 libasound2
 ```
 
-Debemos configurar en el `.env` la variable `FIREFOX_PATH`, con la ruta al binario de firefox
+You must configure the `FIREFOX_PATH` variable in the `.env` file with the path to the Firefox binary.
 ```
 FIREFOX_PATH=/path/to/firefox
 ```
 
-> ***NOTA***:
-> La función de capturas de pantalla solo podrá hacerse en un dispositivo con pantalla. Un servidor no es compatible con esta función. Por lo menos de la manera en la que ahora está implementado. Si alguien sabe o consigue que se pueda hacer, por favor, que inicie un `issue`. Muchas gracias.
+> ***NOTE***:
+> The screenshot function can only be performed on a device with a display. A server is not compatible with this function. At least not in the way it is currently implemented. If someone knows or manages to make it work, please open an `issue`. Thank you very much.
 
 ---
-## Instalar dependencias
+
+## Install Dependencies
 ```
 pip install -r requirements.txt
 ```
 
 ---
-## Ejecución de Django
 
-Para poder inicializar los modelos de Django, es necesario que hagamos lo siguiente:
+## Running Django
+
+To initialize the Django models, you need to do the following:
 ```
 python manage.py migrate
 ```
 
-Ahora, creamos un usuario administrador para poder acceder a la plataforma
+Now, create an administrator user to access the platform.
 ```
 python manage.py createsuperuser
 ```
 
-Lanzamos el servidor
+Launch the server.
 ```
 python manage.py runserver
 ```
 
-> ***NOTA***:
-> Si queremos que el servidor no se lance en local, sino que esté público, debemos indicarlo en la variable `ALLOWED_HOSTS` del fichero `settings.py`. Ejemplo: `ALLOWED_HOSTS = ['mydomain.com']`.
-> Entonces deberemos lanzar el servidor usando: `python manage.py runserver 0.0.0.0:8000`.
-
+> ***NOTE***:
+> If you want the server to be public instead of running locally, you must specify it in the `ALLOWED_HOSTS` variable in the `settings.py` file. Example: `ALLOWED_HOSTS = ['mydomain.com']`.
+> Then, you should launch the server using: `python manage.py runserver 0.0.0.0:8000`.
 
 ---
-# Bibliografía
+# Bibliography
 
 1. Alabdan, Rana. "Phishing attacks survey: Types, vectors, and technical approaches." *Future Internet*, vol. 12, no. 10, 2020, doi: 10.3390/fi12100168.
-2. APWG. "APWG trends report Q4 2023." [Enlace al informe](https://docs.apwg.org/reports/apwg_trends_report_q4_2023.pdf), Accedido: 10 de mayo de 2024.
-3. Shekokar, Narendra M., et al. "An ideal approach for detection and prevention of phishing attacks." *Procedia Computer Science*, vol. 49, 2015, páginas 82–91, doi: 10.1016/j.procs.2015.04.230.
+2. APWG. "APWG trends report Q4 2023." [Link to Report](https://docs.apwg.org/reports/apwg_trends_report_q4_2023.pdf), Accessed: May 10, 2024.
+3. Shekokar, Narendra M., et al. "An ideal approach for detection and prevention of phishing attacks." *Procedia Computer Science*, vol. 49, 2015, pp. 82–91, doi: 10.1016/j.procs.2015.04.230.
 4. Patayo, Clemence. "A preventive and detective model for phishing attack in small and medium size businesses." *Social Science Research Network*, 2021, doi: 10.2139/ssrn.3777065.
-5. Chen, Juan, y Guo, Chuanxiong. "Online detection and prevention of phishing attacks." *2006 First International Conference on Communications and Networking in China*, 2006, doi: 10.1109/CHINACOM.2006.344718.
-6. Elsayed, Yahia, y Shosha, Ahmed. "Large scale detection of IDN domain name masquerading." *2018 APWG Symposium on Electronic Crime Research (eCrime)*, 2018, doi: 10.1109/ECRIME.2018.8376212.
-7. Varshney, Gaurav, Misra, Manoj, y Atrey, Pradeep K. "A survey and classification of web phishing detection schemes." *Security and Communication Networks*, vol. 9, no. 18, 2016, páginas 6266–6284, doi: 10.1002/sec.1674.
-8. Safi, Asadullah, y Singh, Satwinder. "A systematic literature review on phishing website detection techniques." *Journal of King Saud University - Computer and Information Sciences*, vol. 35, no. 2, 2023, páginas 590–611, doi: 10.1016/j.jksuci.2023.01.004.
-9. Goyal, Himanshu, y Mulani, Samina S. "Domain impersonation opportunities amidst TLS availability." 2023.
-10. Singh, Priyanka, Maravi, Yogendra P.S., y Sharma, Sanjeev. "Phishing websites detection through supervised learning networks." *2015 International Conference on Computing and Communications Technologies (ICCCT)*, 2015, páginas 61–65, doi: 10.1109/ICCCT2.2015.7292720.
-11. Ma, Justin, et al. "Beyond blacklists: Learning to detect malicious web sites from suspicious URLs." *Proceedings of the 15th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (KDD)*, 2009, páginas 1245–1254, doi: 10.1145/1557019.1557153.
-12. Fette, Ian, Sadeh, Norman, y Tomasic, Anthony. "Learning to detect phishing emails." *Proceedings of the 16th International Conference on World Wide Web (WWW)*, 2007, páginas 649–656, doi: 10.1145/1242572.1242660.
-13. Xu, Li, et al. "Cross-layer detection of malicious websites." *Proceedings of the Third ACM Conference on Data and Application Security and Privacy (CODASPY)*, 2013, páginas 141–152, doi: 10.1145/2435349.2435366.
-14. Esox-Lucius. "PiHoleblocklist." [GitHub Repository](https://github.com/Esox-Lucius/PiHoleblocklists), 2020, Accedido: 2 de mayo de 2024.
-15. codeesura. "Anti-phishing-extension." [GitHub Repository](https://github.com/codeesura/Anti-phishing-extension/tree/main), 2023, Accedido: 15 de mayo de 2024.
-16. Esler, Joel. "PhishTank." [PhishTank Website](https://phishtank.org/), 2006, Accedido: 6 de marzo de 2024.
-17. Google. "Google Safe Browsing." [Website](https://developers.google.com/safe-browsing), 2005, Accedido: 8 de marzo de 2024.
-18. Anudeep. "Collection of commonly white listed domains for Pi-Hole®." [GitHub Repository](https://github.com/anudeepND/whitelist), 2017, Accedido: 10 de marzo de 2024.
-19. Moghimi, Mahmood, y Varjani, Ali Y. "New rule-based phishing detection method." *Expert Systems with Applications*, vol. 53, 2016, páginas 231–242, doi: 10.1016/j.eswa.2016.01.028.
-20. Tan, Choon L., et al. "Phishwho: Phishing webpage detection via identity keywords extraction and target domain name finder." *Decision Support Systems*, vol. 88, 2016, páginas 18–27, doi: 10.1016/j.dss.2016.05.005.
-21. Ramesh, Gowtham, Gupta, Jithendranath, y Gamya, P.G. "Identification of phishing webpages and its target domains by analyzing the feign relationship." *Journal of Information Security and Applications*, vol. 35, 2017, páginas 75–84, doi: 10.1016/j.jisa.2017.06.001.
+5. Chen, Juan, and Guo, Chuanxiong. "Online detection and prevention of phishing attacks." *2006 First International Conference on Communications and Networking in China*, 2006, doi: 10.1109/CHINACOM.2006.344718.
+6. Elsayed, Yahia, and Shosha, Ahmed. "Large scale detection of IDN domain name masquerading." *2018 APWG Symposium on Electronic Crime Research (eCrime)*, 2018, doi: 10.1109/ECRIME.2018.8376212.
+7. Varshney, Gaurav, Misra, Manoj, and Atrey, Pradeep K. "A survey and classification of web phishing detection schemes." *Security and Communication Networks*, vol. 9, no. 18, 2016, pp. 6266–6284, doi: 10.1002/sec.1674.
+8. Safi, Asadullah, and Singh, Satwinder. "A systematic literature review on phishing website detection techniques." *Journal of King Saud University - Computer and Information Sciences*, vol. 35, no. 2, 2023, pp. 590–611, doi: 10.1016/j.jksuci.2023.01.004.
+9. Goyal, Himanshu, and Mulani, Samina S. "Domain impersonation opportunities amidst TLS availability." 2023.
+10. Singh, Priyanka, Maravi, Yogendra P.S., and Sharma, Sanjeev. "Phishing websites detection through supervised learning networks." *2015 International Conference on Computing and Communications Technologies (ICCCT)*, 2015, pp. 61–65, doi: 10.1109/ICCCT2.2015.7292720.
+11. Ma, Justin, et al. "Beyond blacklists: Learning to detect malicious web sites from suspicious URLs." *Proceedings of the 15th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (KDD)*, 2009, pp. 1245–1254, doi: 10.1145/1557019.1557153.
+12. Fette, Ian, Sadeh, Norman, and Tomasic, Anthony. "Learning to detect phishing emails." *Proceedings of the 16th International Conference on World Wide Web (WWW)*, 2007, pp. 649–656, doi: 10.1145/1242572.1242660.
+13. Xu, Li, et al. "Cross-layer detection of malicious websites." *Proceedings of the Third ACM Conference on Data and Application Security and Privacy (CODASPY)*, 2013, pp. 141–152, doi: 10.1145/2435349.2435366.
+14. Esox-Lucius. "PiHoleblocklist." [GitHub Repository](https://github.com/Esox-Lucius/PiHoleblocklists), 2020, Accessed: May 2, 2024.
+15. codeesura. "Anti-phishing-extension." [GitHub Repository](https://github.com/codeesura/Anti-phishing-extension/tree/main), 2023, Accessed: May 15, 2024.
+16. Esler, Joel. "PhishTank." [PhishTank Website](https://phishtank.org/), 2006, Accessed: March 6, 2024.
+17. Google. "Google Safe Browsing." [Website](https://developers.google.com/safe-browsing), 2005, Accessed: March 8, 2024.
+18. Anudeep. "Collection of commonly white listed domains for Pi-Hole®." [GitHub Repository](https://github.com/anudeepND/whitelist), 2017, Accessed: March 10, 2024.
+19. Moghimi, Mahmood, and Varjani, Ali Y. "New rule-based phishing detection method." *Expert Systems with Applications*, vol. 53, 2016, pp. 231–242, doi: 10.1016/j.eswa.2016.01.028.
+20. Tan, Choon L., et al. "Phishwho: Phishing webpage detection via identity keywords extraction and target domain name finder." *Decision Support Systems*, vol. 88, 2016, pp. 18–27, doi: 10.1016/j.dss.2016.05.005.
+21. Ramesh, Gowtham, Gupta, Jithendranath, and Gamya, P.G. "Identification of phishing webpages and its target domains by analyzing the feign relationship." *Journal of Information Security and Applications*, vol. 35, 2017, pp. 75–84, doi: 10.1016/j.jisa.2017.06.001.
 22. Xiang, Guang, et al. "CANTINA+: A feature-rich machine learning framework for detecting phishing web sites." *ACM Transactions on Information and System Security*, vol. 14, no. 2, 2011, doi: 10.1145/2019599.2019606.
-23. Marchal, Samuel, et al. "Off-the-hook: An efficient and usable client-side phishing prevention application." *IEEE Transactions on Computers*, vol. 66, no. 10, 2017, páginas 1717–1733, doi: 10.1109/TC.2017.2703808.
+23. Marchal, Samuel, et al. "Off-the-hook: An efficient and usable client-side phishing prevention application." *IEEE Transactions on Computers*, vol. 66, no. 10, 2017, pp. 1717–1733, doi: 10.1109/TC.2017.2703808.
 24. Zhang, Yue, et al. "Phinding phish: Evaluating anti-phishing tools." 2007.
-25. Gupta, Gaurav, y Pieprzyk, Josef. "Socio-technological phishing prevention." *Information Security Technical Report*, vol. 16, no. 2, 2011, páginas 67–73, doi: 10.1016/j.istr.2011.09.003.
-26. Zhuang, Weiwei, Jiang, Qingshan, y Xiong, Tengke. "An intelligent anti-phishing strategy model for phishing website detection." *2012 32nd International Conference on Distributed Computing Systems Workshops*, 2012, páginas 51–56, doi: 10.1109/ICDCSW.2012.66.
-27. Geng, Guang-Gang, et al. "Favicon - a clue to phishing sites detection." *2013 APWG eCrime Researchers Summit*, 2013, páginas 1–10, doi: 10.1109/eCRS.2013.6805775.
-28. Alazaidah, R., et al. "Website phishing detection using machine learning techniques." *Journal of Statistics Applications & Probability*, vol. 13, no. 1, 2024, páginas 119–129, doi: 10.18576/jsap/130108.
+25. Gupta, Gaurav, and Pieprzyk, Josef. "Socio-technological phishing prevention." *Information Security Technical Report*, vol. 16, no. 2, 2011, pp. 67–73, doi: 10.1016/j.istr.2011.09.003.
+26. Zhuang, Weiwei, Jiang, Qingshan, and Xiong, Tengke. "An intelligent anti-phishing strategy model for phishing website detection." *2012 32nd International Conference on Distributed Computing Systems Workshops*, 2012, pp. 51–56, doi: 10.1109/ICDCSW.2012.66.
+27. Geng, Guang-Gang, et al. "Favicon - a clue to phishing sites detection." *2013 APWG eCrime Researchers Summit*, 2013, pp. 1–10, doi: 10.1109/eCRS.2013.6805775.
+28. Alazaidah, R., et al. "Website phishing detection using machine learning techniques." *Journal of Statistics Applications & Probability*, vol. 13, no. 1, 2024, pp. 119–129, doi: 10.18576/jsap/130108.
 29. Koide, Takashi, et al. "Detecting phishing sites using ChatGPT." arXiv preprint arXiv:2306.05816, 2023.
 30. Yao, Jia-Yu, et al. "LLM lies: Hallucinations are not bugs, but features as adversarial examples." arXiv preprint arXiv:2310.01469, 2023.
-31. OWASP. "OWASP Top 10 for Large Language Models (LLMs) - 2023." [OWASP Website](https://owasp.org/www-project-top-10-for-large-language-model-applications/assets/PDF/OWASP-Top-10-for-LLMs-2023-v05.pdf), 2023, Accedido: 19 de marzo de 2024.
-32. Alonso, Chema. "Los 10 problemas de seguridad más importantes de ChatGPT, Bard, Llama y apps que usan LLMs: OWASP top 10 para LLM apps versión 1.0.1." [Blog Post](https://www.elladodelmal.com/2023/10/los-10-problemas-de-seguridad-mas.html), 2023, Accedido: 19 de marzo de 2024.
-33. Pirocca, Simone, Allodi, Luca, y Zannone, Nicola. "A toolkit for security awareness training against targeted phishing." *Volume 12569 LNCS*, 2020, páginas 141–156, doi: 10.1007/978-3-030-65610-2_9.
-34. Castaño, Felipe, et al. "Phikita: Phishing kit attacks dataset for phishing websites identification." *IEEE Access*, vol. 11, 2023, páginas 40779–40789, doi: 10.1109/ACCESS.2023.3268027.
-35. Tanaka, Shoma, et al. "Phishing site detection using similarity of website structure." *2021 IEEE Conference on Dependable and Secure Computing (DSC)*, 2021, páginas 1–8, doi: 10.1109/DSC49826.2021.9346256.
-36. Jevans, David. "Apwg." [APWG Website](https://apwg.org/), 2003, Accedido: 6 de marzo de 2024.
-37. APWG. "APWG Phishing Activity Trends Report." [APWG Website](https://apwg.org/reportphishing/), 2023, Accedido: 16 de mayo de 2024.
-38. Government Communications Headquarters. "National Cyber Security Centre." [Website](https://www.ncsc.gov.uk/collection/phishing-scams), 2016, Accedido: 16 de marzo de 2024.
-39. Microsoft. "Submit Abuse Report - Microsoft Security Response Center." [Website](https://msrc.microsoft.com/report/abuse?ThreatType=URL&IncidentType=Phishing), 2004, Accedido: 16 de mayo de 2024.
-40. Alsariera, Yazan A., et al. "AI meta-learners and extra-trees algorithm for the detection of phishing websites." *IEEE Access*, vol. 8, 2020, páginas 142532–142542, doi: 10.1109/ACCESS.2020.3013699.
-41. Alswailem, Amani, et al. "Detecting phishing websites using machine learning." *2019 2nd International Conference on Computer Applications & Information Security (ICCAIS)*, 2019, páginas 1–6, doi: 10.1109/CAIS.2019.8769571.
-42. Nguyen, Luong A. Tuan, et al. "A novel approach for phishing detection using URL-based heuristic." *2014 International Conference on Computing, Management and Telecommunications (ComManTel)*, 2014, páginas 298–303, doi: 10.1109/ComManTel.2014.6825621.
-43. Basnet, Ram B., Sung, Andrew H., y Liu, Qingzhong. "Rule-based phishing attack detection." *International Conference on Security and Management (SAM)*, 2011.
-44. Tavares, Sara. "Canary tokens." [GitHub Repository](https://github.com/thinkst/canarytokens), 2015, Accedido: 6 de marzo de 2024.
-45. Akshantula, Neha. "Defending against website cloning attack with canary tokens." [Blog Post](https://blogs.halodoc.io/defending-against-website-cloning-attack-with-canary-tokens/), 2024, Accedido: 14 de marzo de 2024.
-46. Canarytokens. "What is a cloned website token." [Documentation](https://docs.canarytokens.org/guide/cloned-web-token.html), 2023, Accedido: 14 de marzo de 2024.
+31. OWASP. "OWASP Top 10 for Large Language Models (LLMs) - 2023." [OWASP Website](https://owasp.org/www-project-top-10-for-large-language-model-applications/assets/PDF/OWASP-Top-10-for-LLMs-2023-v05.pdf), 2023, Accessed: March 19, 2024.
+32. Alonso, Chema. "The 10 most important security issues of ChatGPT, Bard, Llama, and apps using LLMs: OWASP top 10 for LLM apps version 1.0.1." [Blog Post](https://www.elladodelmal.com/2023/10/los-10-problemas-de-seguridad-mas.html), 2023, Accessed: March 19, 2024.
+33. Pirocca, Simone, Allodi, Luca, and Zannone, Nicola. "A toolkit for security awareness training against targeted phishing." *Volume 12569 LNCS*, 2020, pp. 141–156, doi: 10.1007/978-3-030-65610-2_9.
+34. Castaño, Felipe, et al. "Phikita: Phishing kit attacks dataset for phishing websites identification." *IEEE Access*, vol. 11, 2023, pp. 40779–40789, doi: 10.1109/ACCESS.2023.3268027.
+35. Tanaka, Shoma, et al. "Phishing site detection using similarity of website structure." *2021 IEEE Conference on Dependable and Secure Computing (DSC)*, 2021, pp. 1–8, doi: 10.1109/DSC49826.2021.9346256.
+36. Jevans, David. "APWG." [APWG Website](https://apwg.org/), 2003, Accessed: March 6, 2024.
+37. APWG. "APWG Phishing Activity Trends Report." [APWG Website](https://apwg.org/reportphishing/), 2023, Accessed: May 16, 2024.
+38. Government Communications Headquarters. "National Cyber Security Centre." [Website](https://www.ncsc.gov.uk/collection/phishing-scams), 2016, Accessed: March 16, 2024.
+39. Microsoft. "Submit Abuse Report - Microsoft Security Response Center." [Website](https://msrc.microsoft.com/report/abuse?ThreatType=URL&IncidentType=Phishing), 2004, Accessed: May 16, 2024.
+40. Alsariera, Yazan A., et al. "AI meta-learners and extra-trees algorithm for the detection of phishing websites." *IEEE Access*, vol. 8, 2020, pp. 142532–142542, doi: 10.1109/ACCESS.2020.3013699.
+41. Alswailem, Amani, et al. "Detecting phishing websites using machine learning." *2019 2nd International Conference on Computer Applications & Information Security (ICCAIS)*, 2019, pp. 1–6, doi: 10.1109/CAIS.2019.8769571.
+42. Nguyen, Luong A. Tuan, et al. "A novel approach for phishing detection using URL-based heuristic." *2014 International Conference on Computing, Management and Telecommunications (ComManTel)*, 2014, pp. 298–303, doi: 10.1109/ComManTel.2014.6825621.
+43. Basnet, Ram B., Sung, Andrew H., and Liu, Qingzhong. "Rule-based phishing attack detection." *International Conference on Security and Management (SAM)*, 2011.
+44. Tavares, Sara. "Canary tokens." [GitHub Repository](https://github.com/thinkst/canarytokens), 2015, Accessed: March 6, 2024.
+45. Akshantula, Neha. "Defending against website cloning attack with canary tokens." [Blog Post](https://blogs.halodoc.io/defending-against-website-cloning-attack-with-canary-tokens/), 2024, Accessed: March 14, 2024.
+46. Canarytokens. "What is a cloned website token." [Documentation](https://docs.canarytokens.org/guide/cloned-web-token.html), 2023, Accessed: March 14, 2024.
 47. Wong, Arthur, et al. "Phishclone: Measuring the efficacy of cloning evasion attacks." arXiv preprint arXiv:2209.01582, 2022.
-48. Fortinet. "What is a canary in cybersecurity?" [Website](https://www.fortinet.com/resources/cyberglossary/what-is-canary-in-cybersecurity), 2023, Accedido: 14 de marzo de 2024.
-49. Django Software Foundation. "Django: The web framework for perfectionists with deadlines." [Website](https://www.djangoproject.com/), 2003, Accedido: 15 de mayo de 2024.
-50. Navarro, Álvaro. "Pescaito." [GitHub Repository](https://github.com/vendul0g/pescaito), 2024, Accedido: 7 de mayo de 2024.
-51. Ulikowski, Marcin. "dnstwist: Domain name permutation engine for detecting typo squatting, phishing and corporate espionage." [GitHub Repository](https://github.com/elceef/dnstwist), 2015, Accedido: 6 de abril de 2024.
-52. typosquatter. "ail-typo-squatting." [GitHub Repository](https://github.com/typosquatter/ail-typo-squatting), 2022, Accedido: 4 de junio de 2024.
-53. Malkusch, Markus. "Whois server list." [GitHub Repository](https://github.com/whois-server-list/whois-server-list), 2014, Accedido: 4 de mayo de 2024.
-54. Sofer, Nir. "Whois servers list for all domain types." [Website](https://www.nirsoft.net/whois_servers_list.html), 2001, Accedido: 4 de mayo de 2024.
-55. Internet Assigned Numbers Authority. "Root zone database." [Website](https://www.iana.org/domains/root/db), 1988, Accedido: 5 de mayo de 2024.
-56. Stradling, Rob, y Kamkar, Samy. "Certificate transparency log monitor." [Website](https://crt.sh/), 2015, Accedido: 6 de mayo de 2024.
-57. Artia International S.R.L. "Ip geolocation API." [Website](https://ip-api.com/), 2012, Accedido: 5 de mayo de 2024.
-58. Berners-Lee, T., y Connolly, D. "RFC 1866: Hypertext Markup Language - 2.0." [IETF RFC](https://www.ietf.org/rfc/rfc1866.txt), 1995, Accedido: 5 de mayo de 2024.
-59. WHATWG. "HTML Living Standard." [Website](https://html.spec.whatwg.org), 2004, Accedido: 5 de mayo de 2024.
-60. Homewood, Alain. "Identifying gophish servers." [Blog Post](https://cybercx.co.nz/blog/identifying-gophish-servers/), 2020, Accedido: 6 de mayo de 2024.
-61. Google. "Report Phishing Page - Google Safe Browsing." [Report Form](https://safebrowsing.google.com/safebrowsing/report_phish/?hl=en), 2005, Accedido: 10 de mayo de 2024.
-62. Kachalov, Zamotkin Timofey. "Javascript obfuscator." [GitHub Repository](https://github.com/javascript-obfuscator/javascript-obfuscator), 2016, Accedido: 7 de mayo de 2024.
-63. Frederick, Gary. "goclone." [GitHub Repository](https://github.com/imthaghost/goclone), 2020, Accedido: 7 de mayo de 2024.
-64. Briki, Iheb. "Website cloner." [GitHub Repository](https://github.com/X-SLAYER/website-cloner-dart), 2022, Accedido: 7 de mayo de 2024.
-65. Ivanov, Michael A., et al. "Phishing attacks and protection against them." *2021 IEEE Conference of Russian Young Researchers in Electrical and Electronic Engineering (ElConRus)*, 2021, páginas 425–428, doi: 10.1109/ElConRus51938.2021.9396693.
-66. Hausken, Kjell, y Levitin, Gregory. "Review of systems defense and attack models." *International Journal of Performability Engineering*, vol. 8, no. 4, 2012, páginas 355–366, doi: 10.23940/ijpe.12.4.p355.mag.
-
-
+48. Fortinet. "What is a canary in cybersecurity?" [Website](https://www.fortinet.com/resources/cyberglossary/what-is-canary-in-cybersecurity), 2023, Accessed: March 14, 2024.
+49. Django Software Foundation. "Django: The web framework for perfectionists with deadlines." [Website](https://www.djangoproject.com/), 2003, Accessed: May 15, 2024.
+50. Navarro, Álvaro. "Pescaito." [GitHub Repository](https://github.com/vendul0g/pescaito), 2024, Accessed: May 7, 2024.
+51. Ulikowski, Marcin. "dnstwist: Domain name permutation engine for detecting typo squatting, phishing and corporate espionage." [GitHub Repository](https://github.com/elceef/dnstwist), 2015, Accessed: April 6, 2024.
+52. typosquatter. "ail-typo-squatting." [GitHub Repository](https://github.com/typosquatter/ail-typo-squatting), 2022, Accessed: June 4, 2024.
+53. Malkusch, Markus. "Whois server list." [GitHub Repository](https://github.com/whois-server-list/whois-server-list), 2014, Accessed: May 4, 2024.
+54. Sofer, Nir. "Whois servers list for all domain types." [Website](https://www.nirsoft.net/whois_servers_list.html), 2001, Accessed: May 4, 2024.
+55. Internet Assigned Numbers Authority. "Root zone database." [Website](https://www.iana.org/domains/root/db), 1988, Accessed: May 5, 2024.
+56. Stradling, Rob, and Kamkar, Samy. "Certificate transparency log monitor." [Website](https://crt.sh/), 2015, Accessed: May 6, 2024.
+57. Artia International S.R.L. "IP geolocation API." [Website](https://ip-api.com/), 2012, Accessed: May 5, 2024.
+58. Berners-Lee, T., and Connolly, D. "RFC 1866: Hypertext Markup Language - 2.0." [IETF RFC](https://www.ietf.org/rfc/rfc1866.txt), 1995, Accessed: May 5, 2024.
+59. WHATWG. "HTML Living Standard." [Website](https://html.spec.whatwg.org), 2004, Accessed: May 5, 2024.
+60. Homewood, Alain. "Identifying gophish servers." [Blog Post](https://cybercx.co.nz/blog/identifying-gophish-servers/), 2020, Accessed: May 6, 2024.
+61. Google. "Report Phishing Page - Google Safe Browsing." [Report Form](https://safebrowsing.google.com/safebrowsing/report_phish/?hl=en), 2005, Accessed: May 10, 2024.
+62. Kachalov, Zamotkin Timofey. "Javascript obfuscator." [GitHub Repository](https://github.com/javascript-obfuscator/javascript-obfuscator), 2016, Accessed: May 7, 2024.
+63. Frederick, Gary. "goclone." [GitHub Repository](https://github.com/imthaghost/goclone), 2020, Accessed: May 7, 2024.
+64. Briki, Iheb. "Website cloner." [GitHub Repository](https://github.com/X-SLAYER/website-cloner-dart), 2022, Accessed: May 7, 2024.
+65. Ivanov, Michael A., et al. "Phishing attacks and protection against them." *2021 IEEE Conference of Russian Young Researchers in Electrical and Electronic Engineering (ElConRus)*, 2021, pp. 425–428, doi: 10.1109/ElConRus51938.2021.9396693.
+66. Hausken, Kjell, and Levitin, Gregory. "Review of systems defense and attack models." *International Journal of Performability Engineering*, vol. 8, no. 4, 2012, pp. 355–366, doi: 10.23940/ijpe.12.4.p355.mag.
